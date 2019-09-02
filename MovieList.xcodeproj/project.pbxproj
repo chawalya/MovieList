@@ -12,6 +12,9 @@
 		F9FE29F9231D281C00558881 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29F7231D281C00558881 /* Main.storyboard */; };
 		F9FE29FB231D281C00558881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29FA231D281C00558881 /* Assets.xcassets */; };
 		F9FE29FE231D281C00558881 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29FC231D281C00558881 /* LaunchScreen.storyboard */; };
+		F9FE2A09231D29C400558881 /* Detail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE2A08231D29C400558881 /* Detail.storyboard */; };
+		F9FE2A0D231D2A4D00558881 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A0B231D2A4D00558881 /* MovieCell.swift */; };
+		F9FE2A0E231D2A4D00558881 /* MovieCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F9FE2A0C231D2A4D00558881 /* MovieCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +25,9 @@
 		F9FE29FA231D281C00558881 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9FE29FD231D281C00558881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F9FE29FF231D281C00558881 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F9FE2A08231D29C400558881 /* Detail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Detail.storyboard; sourceTree = "<group>"; };
+		F9FE2A0B231D2A4D00558881 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		F9FE2A0C231D2A4D00558881 /* MovieCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MovieCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +60,49 @@
 		F9FE29F2231D281C00558881 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE2A05231D285100558881 /* Scences */,
 				F9FE29F3231D281C00558881 /* AppDelegate.swift */,
 				F9FE29F5231D281C00558881 /* ViewController.swift */,
-				F9FE29F7231D281C00558881 /* Main.storyboard */,
 				F9FE29FA231D281C00558881 /* Assets.xcassets */,
 				F9FE29FC231D281C00558881 /* LaunchScreen.storyboard */,
 				F9FE29FF231D281C00558881 /* Info.plist */,
 			);
 			path = MovieList;
+			sourceTree = "<group>";
+		};
+		F9FE2A05231D285100558881 /* Scences */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE2A07231D295900558881 /* Detail */,
+				F9FE2A06231D28FA00558881 /* Main */,
+			);
+			path = Scences;
+			sourceTree = "<group>";
+		};
+		F9FE2A06231D28FA00558881 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE2A0A231D29F900558881 /* Cell */,
+				F9FE29F7231D281C00558881 /* Main.storyboard */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		F9FE2A07231D295900558881 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE2A08231D29C400558881 /* Detail.storyboard */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		F9FE2A0A231D29F900558881 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE2A0B231D2A4D00558881 /* MovieCell.swift */,
+				F9FE2A0C231D2A4D00558881 /* MovieCell.xib */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,6 +166,8 @@
 				F9FE29FE231D281C00558881 /* LaunchScreen.storyboard in Resources */,
 				F9FE29FB231D281C00558881 /* Assets.xcassets in Resources */,
 				F9FE29F9231D281C00558881 /* Main.storyboard in Resources */,
+				F9FE2A09231D29C400558881 /* Detail.storyboard in Resources */,
+				F9FE2A0E231D2A4D00558881 /* MovieCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,6 +180,7 @@
 			files = (
 				F9FE29F6231D281C00558881 /* ViewController.swift in Sources */,
 				F9FE29F4231D281C00558881 /* AppDelegate.swift in Sources */,
+				F9FE2A0D231D2A4D00558881 /* MovieCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
