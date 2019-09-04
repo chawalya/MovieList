@@ -9,24 +9,27 @@
 import UIKit
 
 protocol MainInteractorInterface {
-  func getMobileList(request: Main.GetMovieList.Request)
+  func getMovieList(request: Main.GetMovieList.Request)
+  func setSelectMovie(request: Main.SetSelectMovie.Request)
 //  func getLoadMore(request: Main.GetLoadMore.Request)
+  var selectedMovie: Movie? { get }
+  var id: Int? { get set }
   
 }
 
 class MainInteractor: MainInteractorInterface {
 //  func getLoadMore(request: Main.GetLoadMore.Request) {
-//    <#code#>
+//
 //  }
-  
   var presenter: MainPresenterInterface!
   var worker: MovieWorker?
-  
+  var id: Int?
+  var selectedMovie: Movie?
   var movieList: MovieList?
   
   // MARK: - Business logic
 
-  func getMobileList(request: Main.GetMovieList.Request) {
+  func getMovieList(request: Main.GetMovieList.Request) {
     typealias Response = Main.GetMovieList.Response
     worker?.getMovieList({ (result) in
       var response: Response
@@ -41,17 +44,14 @@ class MainInteractor: MainInteractorInterface {
       }
       self.presenter.presentMovieList(response: response)
     })
-//    worker?.getMovieList({ [weak self] result in
-//      var response: Response
-//      switch result {
-//      case .success(let data):
-//        self?.movieList = Response
-//        response = Response(result: .success(result: data))
-//      case .failure(let error):
-//        response = Response(result: .failure(userError: error))
-//      }
-//      self?.presenter.presentMobileList(response: response)
-//    })
-
+  }
+  
+  func setSelectMovie(request: Main.SetSelectMovie.Request) {
+    let index = request.index
+    
+    selectedMovie = movieList?.results[index]
+    self.id = selectedMovie?.id
+    let response = Main.SetSelectMovie.Response()
+    presenter.presentSetSelectMovie(reponse: response)
   }
 }

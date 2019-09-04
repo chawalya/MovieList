@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -34,6 +34,8 @@
 		F9FE2A31231E08CE00558881 /* MovieElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A30231E08CE00558881 /* MovieElement.swift */; };
 		F9FE2A34231E274300558881 /* MovieWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A33231E274300558881 /* MovieWorker.swift */; };
 		F9FE2A37231E2A1D00558881 /* MovieRestStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A36231E2A1D00558881 /* MovieRestStore.swift */; };
+		F9FE2A3B231F9DB100558881 /* MovieDetailWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A3A231F9DB100558881 /* MovieDetailWorker.swift */; };
+		F9FE2A3D231F9E9F00558881 /* MovieDetailStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE2A3C231F9E9F00558881 /* MovieDetailStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +70,8 @@
 		F9FE2A30231E08CE00558881 /* MovieElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieElement.swift; sourceTree = "<group>"; };
 		F9FE2A33231E274300558881 /* MovieWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieWorker.swift; sourceTree = "<group>"; };
 		F9FE2A36231E2A1D00558881 /* MovieRestStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieRestStore.swift; sourceTree = "<group>"; };
+		F9FE2A3A231F9DB100558881 /* MovieDetailWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailWorker.swift; sourceTree = "<group>"; };
+		F9FE2A3C231F9E9F00558881 /* MovieDetailStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,13 +166,13 @@
 			isa = PBXGroup;
 			children = (
 				F9FE2A08231D29C400558881 /* Detail.storyboard */,
-				F9FE2A1F231D2DDE00558881 /* DetailStore.swift */,
+				F9FE2A24231D2DDE00558881 /* DetailViewController.swift */,
+				F9FE2A25231D2DDE00558881 /* DetailInteractor.swift */,
 				F9FE2A20231D2DDE00558881 /* DetailPresenter.swift */,
+				F9FE2A1F231D2DDE00558881 /* DetailStore.swift */,
 				F9FE2A21231D2DDE00558881 /* DetailWorker.swift */,
 				F9FE2A22231D2DDE00558881 /* DetailRouter.swift */,
 				F9FE2A23231D2DDE00558881 /* DetailModels.swift */,
-				F9FE2A24231D2DDE00558881 /* DetailViewController.swift */,
-				F9FE2A25231D2DDE00558881 /* DetailInteractor.swift */,
 				F9FE2A26231D2DDE00558881 /* DetailEntity.swift */,
 			);
 			path = Detail;
@@ -195,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				F9FE2A33231E274300558881 /* MovieWorker.swift */,
+				F9FE2A3A231F9DB100558881 /* MovieDetailWorker.swift */,
 			);
 			path = Worker;
 			sourceTree = "<group>";
@@ -203,6 +208,7 @@
 			isa = PBXGroup;
 			children = (
 				F9FE2A36231E2A1D00558881 /* MovieRestStore.swift */,
+				F9FE2A3C231F9E9F00558881 /* MovieDetailStore.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -331,6 +337,7 @@
 				F9FE2A2D231D2DDE00558881 /* DetailInteractor.swift in Sources */,
 				F9FE2A18231D2DBE00558881 /* MainPresenter.swift in Sources */,
 				F9FE2A1A231D2DBE00558881 /* MainRouter.swift in Sources */,
+				F9FE2A3B231F9DB100558881 /* MovieDetailWorker.swift in Sources */,
 				F9FE2A2B231D2DDE00558881 /* DetailModels.swift in Sources */,
 				F9FE2A17231D2DBE00558881 /* MainStore.swift in Sources */,
 				F9FE2A1D231D2DBE00558881 /* MainInteractor.swift in Sources */,
@@ -339,6 +346,7 @@
 				F9FE29F4231D281C00558881 /* AppDelegate.swift in Sources */,
 				F9FE2A2E231D2DDE00558881 /* DetailEntity.swift in Sources */,
 				F9FE2A1C231D2DBE00558881 /* MainViewController.swift in Sources */,
+				F9FE2A3D231F9E9F00558881 /* MovieDetailStore.swift in Sources */,
 				F9FE2A1E231D2DBE00558881 /* MainEntity.swift in Sources */,
 				F9FE2A28231D2DDE00558881 /* DetailPresenter.swift in Sources */,
 				F9FE2A19231D2DBE00558881 /* MainWorker.swift in Sources */,

@@ -8,9 +8,6 @@
 
 import Foundation
 
-import Foundation
-
-// MARK: - Movie
 struct MovieList: Codable {
   let page, totalResults, totalPages: Int
   let results: [Movie]
@@ -23,7 +20,6 @@ struct MovieList: Codable {
   }
 }
 
-// MARK: - Result
 struct Movie: Codable {
   let popularity: Double
   let id: Int
@@ -51,3 +47,46 @@ struct Movie: Codable {
     case posterPath = "poster_path"
   }
 }
+
+struct MovieDetail: Codable {
+  let genres: [Genre]
+  let id: Int
+  let imdbID, originalLanguage, overview: String
+  let popularity: Double
+  let title: String
+  let voteAverage: Double
+  let voteCount: Int
+  let posterPath: String
+  
+  enum CodingKeys: String, CodingKey {
+    case genres, id
+    case imdbID = "imdb_id"
+    case originalLanguage = "original_language"
+    case overview, popularity
+    case title
+    case voteAverage = "vote_average"
+    case voteCount = "vote_count"
+    case posterPath = "poster_path"
+  }
+}
+
+// MARK: - BelongsToCollection
+struct BelongsToCollection: Codable {
+  let id: Int
+  let name, posterPath, backdropPath: String
+  
+  enum CodingKeys: String, CodingKey {
+    case id, name
+    case posterPath = "poster_path"
+    case backdropPath = "backdrop_path"
+  }
+}
+
+// MARK: - Genre
+struct Genre: Codable {
+  let id: Int
+  let name: String
+}
+
+
+

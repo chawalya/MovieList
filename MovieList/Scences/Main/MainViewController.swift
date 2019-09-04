@@ -10,11 +10,11 @@ import UIKit
 
 protocol MainViewControllerInterface: class {
   func displayMovieList(viewModel: Main.GetMovieList.ViewModel)
+  func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel)
 }
 class MainViewController: UIViewController, MainViewControllerInterface {
   var interactor: MainInteractorInterface!
   var router: MainRouter!
-  
   
   @IBOutlet weak var tableView: UITableView!
   var displayedMovies: [Main.GetMovieList.ViewModel.DisplayedMovie] = []
@@ -54,9 +54,8 @@ class MainViewController: UIViewController, MainViewControllerInterface {
 
   func getMovieList() {
     let request = Main.GetMovieList.Request()
-    interactor.getMobileList(request: request)
+    interactor.getMovieList(request: request)
   }
-
 //  func getLoadMore() {
 //    let request = Main.GetLoadMore.Request(page: <#T##Int#>)
 //    interactor.getLoadMore(request: request)
@@ -74,6 +73,11 @@ class MainViewController: UIViewController, MainViewControllerInterface {
       present(alert, animated: true)
     }
   }
+  
+  func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel){
+    router.navigateToDetail()
+  }
+
   
 //  // MARK: - Router
 //
@@ -99,11 +103,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     cell.updateUI(displayedMovies[indexPath.row])
     return cell
   }
+  
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     if indexPath.row == (displayedMovies.count - 1)
     {
-      
+      //find lastCell in tableView
     }
+  }
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
+    let request = Main.SetSelectMovie.Request(index: indexPath.row)
+    interactor.setSelectMovie(request: request)
   }
 }
 

@@ -10,13 +10,11 @@ import UIKit
 
 protocol MainPresenterInterface {
   func presentMovieList(response: Main.GetMovieList.Response)
-}
+  func presentSetSelectMovie(reponse: Main.SetSelectMovie.Response)
+  }
 
 class MainPresenter: MainPresenterInterface {
   weak var viewController: MainViewControllerInterface!
-
-  // MARK: - Presentation logic
-
   func presentMovieList(response: Main.GetMovieList.Response) {
     typealias ViewModel = Main.GetMovieList.ViewModel
     typealias DisplayedMovie = Main.GetMovieList.ViewModel.DisplayedMovie
@@ -40,4 +38,11 @@ class MainPresenter: MainPresenterInterface {
 //    let viewModel = Main.Something.ViewModel()
 //    viewController.displaySomething(viewModel: viewModel)
   }
+  func presentSetSelectMovie(reponse: Main.SetSelectMovie.Response){
+    let viewModel = Main.SetSelectMovie.ViewModel()
+    viewController.displaySetSelectMovie(viewModel: viewModel)
+
+    
+  }
+
 }

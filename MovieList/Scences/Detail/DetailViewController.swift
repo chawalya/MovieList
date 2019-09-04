@@ -7,14 +7,19 @@
 //
 
 import UIKit
-
+import AlamofireImage
 protocol DetailViewControllerInterface: class {
-  func displaySomething(viewModel: Detail.Something.ViewModel)
+  func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel)
 }
 
 class DetailViewController: UIViewController, DetailViewControllerInterface {
   var interactor: DetailInteractorInterface!
   var router: DetailRouter!
+  
+  @IBOutlet weak var imageView: UIImageView!
+  @IBOutlet weak var TitleLabel: UILabel!
+  @IBOutlet weak var DetailLabel: UILabel!
+  
 
   // MARK: - Object lifecycle
 
@@ -34,7 +39,7 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
 
     let interactor = DetailInteractor()
     interactor.presenter = presenter
-    interactor.worker = DetailWorker(store: DetailStore())
+    interactor.worker = MovieDetailWorker(store: MovieDetailStore())
 
     viewController.interactor = interactor
     viewController.router = router
@@ -44,24 +49,28 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    doSomethingOnLoad()
+    getMovieDetail()
   }
 
   // MARK: - Event handling
 
-  func doSomethingOnLoad() {
-    // NOTE: Ask the Interactor to do some work
-
-    let request = Detail.Something.Request()
-    interactor.doSomething(request: request)
+  func getMovieDetail() {
+    let request = Detail.GetMovieDetail.Request()
+    interactor.getMovieDetail(request: request)
   }
 
   // MARK: - Display logic
 
-  func displaySomething(viewModel: Detail.Something.ViewModel) {
-    // NOTE: Display the result from the Presenter
-
-    // nameTextField.text = viewModel.name
+  func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
+    let displayedMovie = viewModel.displayedMovie
+    if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
+      imageView.loadImageUrlDetail(url)
+    } else {
+      imageView.image = nil
+    }
+    TitleLabel.text = displayedMovie.title
+    DetailLabel.text = displayedMovie.detail
+    
   }
 
   // MARK: - Router
@@ -74,4 +83,11 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     print("unwind...")
     router.passDataToNextScene(segue: segue)
   }
+}
+
+extension UIImageView{
+  func loadImageUrlDetail(_ urlString: URL) {
+    af_setImage(withURL: urlString)
+  }
+
 }

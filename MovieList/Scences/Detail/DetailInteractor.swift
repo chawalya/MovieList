@@ -9,27 +9,36 @@
 import UIKit
 
 protocol DetailInteractorInterface {
-  func doSomething(request: Detail.Something.Request)
-  var model: Entity? { get }
+  func getMovieDetail(request: Detail.GetMovieDetail.Request)
+  var selectedMovie: MovieDetail? { get set }
+  var id: Int? { get set }
 }
 
 class DetailInteractor: DetailInteractorInterface {
   var presenter: DetailPresenterInterface!
-  var worker: DetailWorker?
-  var model: Entity?
+  var worker: MovieDetailWorker?
+  var selectedMovie: MovieDetail?
+  var id: Int?
 
   // MARK: - Business logic
 
-  func doSomething(request: Detail.Something.Request) {
-    worker?.doSomeWork { [weak self] in
-      if case let Result.success(data) = $0 {
-        // If the result was successful, we keep the data so that we can deliver it to another view controller through the router.
-        self?.model = data
+  func getMovieDetail(request: Detail.GetMovieDetail.Request) {
+    guard let id = id else { return }
+    worker?.getMovieDetail(id: id){ [weak self] result in
+      var response: Detail.GetMovieDetail.Response
+      switch result {
+      case .success(let data):
+        self?.selectedMovie = data
+        response = Detail.GetMovieDetail.Response(movie: data)
+      case .failure(let error):
+        print("________________________")
+        response = Detail.GetMovieDetail.Response(movie: nil)
       }
-
-      // NOTE: Pass the result to the Presenter. This is done by creating a response model with the result from the worker. The response could contain a type like UserResult enum (as declared in the SCB Easy project) with the result as an associated value.
-      let response = Detail.Something.Response()
-      self?.presenter.presentSomething(response: response)
+      self?.presenter.presentMovieDetail(response: response)
     }
   }
+  
 }
+
+
+

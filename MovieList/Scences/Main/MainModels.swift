@@ -31,10 +31,10 @@ struct Main {
     }
   }
   
-  struct GetLoadMore {
+  struct SetSelectMovie {
     /// Data struct sent to Interactor
     struct Request {
-      let page: Int
+      let index: Int
     }
     /// Data struct sent to Presenter
     struct Response {

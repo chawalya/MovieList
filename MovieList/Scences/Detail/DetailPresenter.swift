@@ -9,7 +9,7 @@
 import UIKit
 
 protocol DetailPresenterInterface {
-  func presentSomething(response: Detail.Something.Response)
+  func presentMovieDetail(response: Detail.GetMovieDetail.Response)
 }
 
 class DetailPresenter: DetailPresenterInterface {
@@ -17,10 +17,22 @@ class DetailPresenter: DetailPresenterInterface {
 
   // MARK: - Presentation logic
 
-  func presentSomething(response: Detail.Something.Response) {
-    // NOTE: Format the response from the Interactor and pass the result back to the View Controller. The resulting view model should be using only primitive types. Eg: the view should not need to involve converting date object into a formatted string. The formatting is done here.
-
-    let viewModel = Detail.Something.ViewModel()
-    viewController.displaySomething(viewModel: viewModel)
+  func presentMovieDetail(response: Detail.GetMovieDetail.Response) {
+//    typealias ViewModelDetail = Detail.GetMovieDetail.ViewModel
+//    typealias DisplayedMovieDetail = Detail.GetMovieDetail.ViewModel.DisplayedMovie
+//    var viewModelDetail : ViewModelDetail
+    
+    guard let movie = response.movie else { return }
+    let displayMovie = Detail.GetMovieDetail.ViewModel.DisplayedMovie(
+      title: movie.title,
+      detail: movie.overview,
+      category: movie.genres.first?.name ?? "",
+      language: movie.originalLanguage,
+      posterUrl: "https://image.tmdb.org/t/p/original\(movie.posterPath)")
+    
+    let viewModel = Detail.GetMovieDetail.ViewModel(displayedMovie: displayMovie)
+    viewController.displayMovieDetail(viewModel: viewModel)
   }
+  
+  
 }

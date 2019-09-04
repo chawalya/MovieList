@@ -10,12 +10,23 @@ import UIKit
 
 struct Detail {
   /// This structure represents a use case
-  struct Something {
+  struct GetMovieDetail {
     /// Data struct sent to Interactor
     struct Request {}
     /// Data struct sent to Presenter
-    struct Response {}
+    struct Response {
+      let movie: MovieDetail?
+    }
     /// Data struct sent to ViewController
-    struct ViewModel {}
+    struct ViewModel {
+      let displayedMovie: DisplayedMovie
+      struct DisplayedMovie {
+        let title: String
+        let detail: String
+        let category: String
+        let language: String
+        let posterUrl: String?
+      }
+    }
   }
 }
