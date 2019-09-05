@@ -15,11 +15,11 @@ struct Detail {
     struct Request {}
     /// Data struct sent to Presenter
     struct Response {
-      let movie: MovieDetail?
+      let result: Result<MovieDetail?>
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      let displayedMovie: DisplayedMovie
+      let displayedMovie: Result<DisplayedMovie>
       struct DisplayedMovie {
         let title: String
         let detail: String

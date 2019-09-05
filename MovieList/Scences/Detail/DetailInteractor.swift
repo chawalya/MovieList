@@ -37,10 +37,10 @@ class DetailInteractor: DetailInteractorInterface {
       switch result {
       case .success(let data):
         self?.selectedMovie = data
-        response = Detail.GetMovieDetail.Response(movie: data)
+        response = Detail.GetMovieDetail.Response(result: .success(data))
     case .failure(let error):
         print("________________________")
-        response = Detail.GetMovieDetail.Response(movie: nil)
+        response = Detail.GetMovieDetail.Response(result: .failure(error))
       }
       self?.presenter.presentMovieDetail(response: response)
     }

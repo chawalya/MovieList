@@ -79,15 +79,22 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
   }
   
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
-        let displayedMovie = viewModel.displayedMovie
+      let displayedMovie = viewModel.displayedMovie
+      switch viewModel.displayedMovie {
+      case .success(let displayedMovie):
         if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
             imageView.loadImageUrlDetail(url)
         } else {
-            imageView.image = nil
+        imageView.image = nil
         }
         TitleLabel.text = displayedMovie.title
         DetailLabel.text = displayedMovie.detail
-    }
+      case .failure(let error):
+        let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+        present(alert, animated: true)
+
+  }
+}
   
     // MARK: - Router
 
