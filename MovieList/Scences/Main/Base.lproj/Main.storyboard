@@ -52,7 +52,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="TaX-PP-T1o"/>
                     </view>
-                    <navigationItem key="navigationItem" id="XQ5-1t-yYC"/>
+                    <navigationItem key="navigationItem" id="XQ5-1t-yYC">
+                        <barButtonItem key="rightBarButtonItem" title="Sort" id="cNg-XO-Lgr">
+                            <connections>
+                                <action selector="sortButton:" destination="Enm-RR-71j" id="ezx-Rc-9ba"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="uw6-9A-3ly" id="gv1-vF-8Es"/>
                     </connections>

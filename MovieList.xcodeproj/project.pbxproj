@@ -124,6 +124,7 @@
 		F9FE29F2231D281C00558881 /* MovieList */ = {
 			isa = PBXGroup;
 			children = (
+				F9FE2A3E2320F9E600558881 /* Helper */,
 				F9FE2A35231E29FF00558881 /* Store */,
 				F9FE2A32231E272000558881 /* Worker */,
 				F9FE2A2F231E089E00558881 /* Model */,
@@ -153,11 +154,10 @@
 				F9FE2A14231D2DBE00558881 /* MainViewController.swift */,
 				F9FE2A15231D2DBE00558881 /* MainInteractor.swift */,
 				F9FE2A10231D2DBE00558881 /* MainPresenter.swift */,
-				F9FE2A0F231D2DBE00558881 /* MainStore.swift */,
-				F9FE2A11231D2DBE00558881 /* MainWorker.swift */,
 				F9FE2A12231D2DBE00558881 /* MainRouter.swift */,
 				F9FE2A13231D2DBE00558881 /* MainModels.swift */,
-				F9FE2A16231D2DBE00558881 /* MainEntity.swift */,
+				F9FE2A0F231D2DBE00558881 /* MainStore.swift */,
+				F9FE2A11231D2DBE00558881 /* MainWorker.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -169,11 +169,10 @@
 				F9FE2A24231D2DDE00558881 /* DetailViewController.swift */,
 				F9FE2A25231D2DDE00558881 /* DetailInteractor.swift */,
 				F9FE2A20231D2DDE00558881 /* DetailPresenter.swift */,
+				F9FE2A23231D2DDE00558881 /* DetailModels.swift */,
 				F9FE2A1F231D2DDE00558881 /* DetailStore.swift */,
 				F9FE2A21231D2DDE00558881 /* DetailWorker.swift */,
 				F9FE2A22231D2DDE00558881 /* DetailRouter.swift */,
-				F9FE2A23231D2DDE00558881 /* DetailModels.swift */,
-				F9FE2A26231D2DDE00558881 /* DetailEntity.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -211,6 +210,15 @@
 				F9FE2A3C231F9E9F00558881 /* MovieDetailStore.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		F9FE2A3E2320F9E600558881 /* Helper */ = {
+			isa = PBXGroup;
+			children = (
+				F9FE2A26231D2DDE00558881 /* DetailEntity.swift */,
+				F9FE2A16231D2DBE00558881 /* MainEntity.swift */,
+			);
+			path = Helper;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

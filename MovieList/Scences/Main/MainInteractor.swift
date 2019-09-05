@@ -14,7 +14,6 @@ protocol MainInteractorInterface {
 //  func getLoadMore(request: Main.GetLoadMore.Request)
   var selectedMovie: Movie? { get }
   var id: Int? { get set }
-  
 }
 
 class MainInteractor: MainInteractorInterface {
@@ -31,33 +30,44 @@ class MainInteractor: MainInteractorInterface {
 
   func getMovieList(request: Main.GetMovieList.Request) {
     typealias Response = Main.GetMovieList.Response
+    let page = request.page
     if let movieList = movieList, request.useCache {
       let response = Response(result: .success(movieList))
       presenter.presentMovieList(response: response)
     } else {
-      worker?.getMovieList({ (result) in
+      worker?.getMovieList(page:page) { [weak self] (result) in
         var response: Response
         switch result {
         case .success(let data):
-          self.movieList = data
-          response = Response(result: .success(data))
+          var results: [Movie]
+          if let movieList = self?.movieList {
+            results = movieList.results + data.results
+          } else {
+            results = data.results
+          }
+          let movieList = MovieList(page: data.page,
+                                    totalResults: data.totalResults,
+                                    totalPages: data.totalPages,
+                                    results: results)
+          self?.movieList = movieList
+          response = Response(result: .success(movieList))
           
         case .failure(let error):
           response = Response(result: .failure(error))
           
         }
-        self.presenter.presentMovieList(response: response)
-      })
+        self?.presenter.presentMovieList(response: response)
+      }
     }
-    
   }
   
   func setSelectMovie(request: Main.SetSelectMovie.Request) {
     let index = request.index
-    
     selectedMovie = movieList?.results[index]
     self.id = selectedMovie?.id
     let response = Main.SetSelectMovie.Response()
     presenter.presentSetSelectMovie(reponse: response)
   }
+  
+  
 }

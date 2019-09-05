@@ -14,6 +14,7 @@ struct Main {
     /// Data struct sent to Interactor
     struct Request {
       let useCache: Bool
+      let page: Int
     }
     /// Data struct sent to Presenter
     struct Response {
@@ -21,12 +22,16 @@ struct Main {
     }
     /// Data struct sent to ViewController
     struct ViewModel {
-      let content: Result<[DisplayedMovie]>
+      let content: Result<MovieViewModel>
       struct DisplayedMovie {
         let name: String
         let popularity: String
         let vote: String
         let backdropUrl, posterUrl: String?
+      }
+      struct MovieViewModel {
+        let displayedMovies: [DisplayedMovie]
+        let totalPage: Int
       }
     }
   }
@@ -45,12 +50,13 @@ struct Main {
       }
     }
   
-  struct SetVoting {
+  struct SetLoadMore {
     /// Data struct sent to Interactor
     struct Request {
     }
     /// Data struct sent to Presenter
     struct Response {
+      let TotalPage: Int
     }
     /// Data struct sent to ViewController
     struct ViewModel {

@@ -27,17 +27,15 @@ class MovieCell: UITableViewCell {
     }
   
   func updateUI(_ displayedMovies: Main.GetMovieList.ViewModel.DisplayedMovie) {
+    moviePoster.image = nil
+    backdrop.image = nil
     titleLabel.text = displayedMovies.name
     popLabel.text = displayedMovies.vote
     if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
       moviePoster.loadImageUrl(url)
-    } else {
-      moviePoster.image = nil
     }
     if let backdropUrl = displayedMovies.backdropUrl, let url = URL(string: backdropUrl){
       backdrop.loadImageUrl(url)
-    } else {
-      backdrop.image = nil
     }
   }
 }
