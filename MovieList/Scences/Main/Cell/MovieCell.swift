@@ -28,7 +28,7 @@ class MovieCell: UITableViewCell {
   
   func updateUI(_ displayedMovies: Main.GetMovieList.ViewModel.DisplayedMovie) {
     titleLabel.text = displayedMovies.name
-    popLabel.text = displayedMovies.popularity
+    popLabel.text = displayedMovies.vote
     if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
       moviePoster.loadImageUrl(url)
     } else {

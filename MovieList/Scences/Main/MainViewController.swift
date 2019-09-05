@@ -11,6 +11,7 @@ import UIKit
 protocol MainViewControllerInterface: class {
   func displayMovieList(viewModel: Main.GetMovieList.ViewModel)
   func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel)
+//  func displayVoting(viewModel: Main.SetVoting.ViewModel)
 }
 class MainViewController: UIViewController, MainViewControllerInterface {
   var interactor: MainInteractorInterface!
@@ -53,9 +54,15 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   // MARK: - Event handling
 
   func getMovieList() {
-    let request = Main.GetMovieList.Request()
+    let request = Main.GetMovieList.Request(useCache: false)
     interactor.getMovieList(request: request)
   }
+  
+  func updateMovieList() {
+    let request = Main.GetMovieList.Request(useCache: true)
+    interactor.getMovieList(request: request)
+  }
+  
 //  func getLoadMore() {
 //    let request = Main.GetLoadMore.Request(page: <#T##Int#>)
 //    interactor.getLoadMore(request: request)
@@ -73,6 +80,10 @@ class MainViewController: UIViewController, MainViewControllerInterface {
       present(alert, animated: true)
     }
   }
+  
+//  func displayVoting(viewModel: Main.SetVoting.ViewModel){
+//    
+//  }
   
   func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel){
     router.navigateToDetail()
@@ -114,6 +125,11 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
     tableView.deselectRow(at: indexPath, animated: true)
     let request = Main.SetSelectMovie.Request(index: indexPath.row)
     interactor.setSelectMovie(request: request)
+  }
+}
+extension MainViewController: DetailViewControllerDelegate{
+  func setNewVote() {
+    updateMovieList()
   }
 }
 

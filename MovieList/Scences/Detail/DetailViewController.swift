@@ -11,8 +11,11 @@ import Cosmos
 import UIKit
 protocol DetailViewControllerInterface: class {
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel)
+    func displayNewVote(viewModel: Detail.SetVoting.ViewModel)
 }
-
+protocol DetailViewControllerDelegate: class {
+  func setNewVote()
+}
 class DetailViewController: UIViewController, DetailViewControllerInterface {
     var interactor: DetailInteractorInterface!
     var router: DetailRouter!
@@ -22,7 +25,9 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     @IBOutlet var starRating: CosmosView!
 
     // MARK: - Object lifecycle
-
+  
+  weak var delegate: DetailViewControllerDelegate?
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(viewController: self)
@@ -50,15 +55,16 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     override func viewDidLoad() {
         super.viewDidLoad()
         getMovieDetail()
-        starRating.didFinishTouchingCosmos = { rating in
+        starRating.didFinishTouchingCosmos = { [weak self] rating in
             print("Rate \(rating)")
-//          UserDefaults.standard.set(<#T##value: Double##Double#>, forKey: <#T##String#>)
-
-        }
-        starRating.didTouchCosmos = { _ in
-            print("hello")
+           self?.calculateVote(vote: rating)
         }
     }
+  
+  func calculateVote(vote: Double){
+    let request = Detail.SetVoting.Request(voteUser: vote)
+    interactor.calculateVote(request: request)
+  }
 
     // MARK: - Event handling
 
@@ -68,7 +74,10 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     }
 
     // MARK: - Display logic
-
+  func displayNewVote(viewModel: Detail.SetVoting.ViewModel){
+    delegate?.setNewVote()
+  }
+  
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
         let displayedMovie = viewModel.displayedMovie
         if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
@@ -79,7 +88,7 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
         TitleLabel.text = displayedMovie.title
         DetailLabel.text = displayedMovie.detail
     }
-
+  
     // MARK: - Router
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

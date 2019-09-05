@@ -31,19 +31,25 @@ class MainInteractor: MainInteractorInterface {
 
   func getMovieList(request: Main.GetMovieList.Request) {
     typealias Response = Main.GetMovieList.Response
-    worker?.getMovieList({ (result) in
-      var response: Response
-      switch result {
-      case .success(let data):
-        self.movieList = data
-        response = Response(result: .success(data))
-        
-      case .failure(let error):
-        response = Response(result: .failure(error))
-        
-      }
-      self.presenter.presentMovieList(response: response)
-    })
+    if let movieList = movieList, request.useCache {
+      let response = Response(result: .success(movieList))
+      presenter.presentMovieList(response: response)
+    } else {
+      worker?.getMovieList({ (result) in
+        var response: Response
+        switch result {
+        case .success(let data):
+          self.movieList = data
+          response = Response(result: .success(data))
+          
+        case .failure(let error):
+          response = Response(result: .failure(error))
+          
+        }
+        self.presenter.presentMovieList(response: response)
+      })
+    }
+    
   }
   
   func setSelectMovie(request: Main.SetSelectMovie.Request) {

@@ -12,6 +12,10 @@ protocol DetailInteractorInterface {
   func getMovieDetail(request: Detail.GetMovieDetail.Request)
   var selectedMovie: MovieDetail? { get set }
   var id: Int? { get set }
+  var voteCount:Int? { get set }
+  var voteAvg: Double? { get set}
+  var newVote: Double? { get set }
+  func calculateVote(request: Detail.SetVoting.Request)
 }
 
 class DetailInteractor: DetailInteractorInterface {
@@ -19,6 +23,10 @@ class DetailInteractor: DetailInteractorInterface {
   var worker: MovieDetailWorker?
   var selectedMovie: MovieDetail?
   var id: Int?
+  var voteAvg: Double?
+  var voteCount: Int?
+  var newVote: Double?
+  
 
   // MARK: - Business logic
 
@@ -30,12 +38,26 @@ class DetailInteractor: DetailInteractorInterface {
       case .success(let data):
         self?.selectedMovie = data
         response = Detail.GetMovieDetail.Response(movie: data)
-      case .failure(let error):
+    case .failure(let error):
         print("________________________")
         response = Detail.GetMovieDetail.Response(movie: nil)
       }
       self?.presenter.presentMovieDetail(response: response)
     }
+  }
+  
+  func calculateVote(request: Detail.SetVoting.Request) {
+    guard let id = id else { return }
+    voteCount = selectedMovie?.voteCount
+    let count = Double(voteCount ?? 0)
+    voteAvg = selectedMovie?.voteAverage
+    let avg = voteAvg ?? 0.0
+    newVote = ((avg*count)+(request.voteUser*2))/(count+1)
+    let data = [String(id): newVote]
+    UserDefaults.standard.set(data, forKey: "voteByUser")
+    let response = Detail.SetVoting.Response()
+    presenter.presentSetNewVoting(reponse: response)
+    
   }
   
 }

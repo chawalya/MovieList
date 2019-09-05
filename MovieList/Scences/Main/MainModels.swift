@@ -13,7 +13,7 @@ struct Main {
   struct GetMovieList {
     /// Data struct sent to Interactor
     struct Request {
-//      let pages: Int
+      let useCache: Bool
     }
     /// Data struct sent to Presenter
     struct Response {
@@ -38,11 +38,24 @@ struct Main {
     }
     /// Data struct sent to Presenter
     struct Response {
+      
     }
     /// Data struct sent to ViewController
     struct ViewModel {
       }
     }
+  
+  struct SetVoting {
+    /// Data struct sent to Interactor
+    struct Request {
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+    }
+  }
   }
 
   

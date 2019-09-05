@@ -14,13 +14,15 @@ protocol MainRouterInput {
 
 class MainRouter: MainRouterInput {
   weak var viewController: MainViewController!
-
+  
   // MARK: - Navigation
-
+  
   func navigateToDetail() {
     if let detailViewController = UIStoryboard(name: "Detail", bundle: nil).instantiateInitialViewController() as? DetailViewController {
       detailViewController.interactor.id = viewController.interactor.id
+      detailViewController.delegate = viewController
       viewController.navigationController?.pushViewController(detailViewController, animated: true)
+      
     }
   }
 

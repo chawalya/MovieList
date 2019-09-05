@@ -10,6 +10,7 @@ import UIKit
 
 protocol DetailPresenterInterface {
   func presentMovieDetail(response: Detail.GetMovieDetail.Response)
+  func presentSetNewVoting(reponse: Detail.SetVoting.Response)
 }
 
 class DetailPresenter: DetailPresenterInterface {
@@ -18,10 +19,6 @@ class DetailPresenter: DetailPresenterInterface {
   // MARK: - Presentation logic
 
   func presentMovieDetail(response: Detail.GetMovieDetail.Response) {
-//    typealias ViewModelDetail = Detail.GetMovieDetail.ViewModel
-//    typealias DisplayedMovieDetail = Detail.GetMovieDetail.ViewModel.DisplayedMovie
-//    var viewModelDetail : ViewModelDetail
-    
     guard let movie = response.movie else { return }
     let displayMovie = Detail.GetMovieDetail.ViewModel.DisplayedMovie(
       title: movie.title,
@@ -32,6 +29,11 @@ class DetailPresenter: DetailPresenterInterface {
     
     let viewModel = Detail.GetMovieDetail.ViewModel(displayedMovie: displayMovie)
     viewController.displayMovieDetail(viewModel: viewModel)
+  }
+  func presentSetNewVoting(reponse: Detail.SetVoting.Response){
+    let viewModel = Detail.SetVoting.ViewModel()
+    viewController.displayNewVote(viewModel: viewModel)
+    
   }
   
   

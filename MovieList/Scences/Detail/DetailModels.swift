@@ -29,4 +29,20 @@ struct Detail {
       }
     }
   }
+    
+    struct SetVoting {
+      /// Data struct sent to Interactor
+      struct Request {
+        let voteUser: Double
+      }
+      /// Data struct sent to Presenter
+      struct Response {
+        
+      }
+      /// Data struct sent to ViewController
+      struct ViewModel {
+        
+      }
+    }
+  
 }

@@ -22,10 +22,14 @@ class MainPresenter: MainPresenterInterface {
     switch response.result {
     case .success(let data):
       let displayedMovies = data.results.map { (element) -> DisplayedMovie in
-       
+        let retrieveDict = UserDefaults.standard.dictionary(forKey:"voteByUser")
+        var vote = element.voteAverage
+        if let userVote = retrieveDict?[String(element.id)] as? Double{
+          vote = userVote
+        }
         return DisplayedMovie(name: element.title,
                               popularity: "\(element.popularity)",
-                              vote: "\(element.voteAverage)",
+                              vote: "\(vote)",
                               backdropUrl: "https://image.tmdb.org/t/p/original\(element.backdropPath ?? "")",
                               posterUrl: "https://image.tmdb.org/t/p/original\(element.posterPath ?? "")")
       }
