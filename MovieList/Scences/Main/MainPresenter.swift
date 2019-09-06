@@ -49,7 +49,7 @@ class MainPresenter: MainPresenterInterface {
   }
   func presentSetSelectMovie(reponse: Main.SetSelectMovie.Response){
     let viewModel = Main.SetSelectMovie.ViewModel()
-    viewController.displaySetSelectMovie(viewModel: viewModel)
+    viewController.displaySelectMovie(viewModel: viewModel)
   }
   func presentSetTotalPage(reponse: Main.SetLoadMore.Response){
     

@@ -6,18 +6,16 @@
 //  Copyright © 2562 SCB. All rights reserved.
 //
 
-import UIKit
 import AlamofireImage
+import UIKit
 
 class MovieCell: UITableViewCell {
-  
-  @IBOutlet weak var moviePoster: UIImageView!
-  @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var backdrop: UIImageView!
-  @IBOutlet weak var ratingLabel: UILabel!
-  @IBOutlet weak var popLabel: UILabel!
-  @IBOutlet weak var voteCountLabel: UILabel!
-  
+    @IBOutlet var moviePoster: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var backdrop: UIImageView!
+    @IBOutlet var ratingLabel: UILabel!
+    @IBOutlet var popLabel: UILabel!
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -25,40 +23,36 @@ class MovieCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-  
-  func updateUI(_ displayedMovies: Main.GetMovieList.ViewModel.DisplayedMovie) {
-    moviePoster.image = nil
-    backdrop.image = nil
-    titleLabel.text = displayedMovies.name
-    ratingLabel.text = displayedMovies.vote
-    popLabel.text = "Popularity : \(displayedMovies.popularity)"
-    if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
-      moviePoster.loadImageUrl(url)
+
+    func updateUI(_ displayedMovies: Main.GetMovieList.ViewModel.DisplayedMovie) {
+        moviePoster.image = nil
+        backdrop.image = nil
+        titleLabel.text = displayedMovies.name
+        ratingLabel.text = displayedMovies.vote
+        popLabel.text = "Popularity : \(displayedMovies.popularity)"
+        if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
+            moviePoster.loadImageUrl(url)
+        }
+        if let backdropUrl = displayedMovies.backdropUrl, let url = URL(string: backdropUrl) {
+            backdrop.loadImageUrl(url)
+        }
     }
-    if let backdropUrl = displayedMovies.backdropUrl, let url = URL(string: backdropUrl){
-      backdrop.loadImageUrl(url)
-    }
-  }
 }
 
 extension UIImageView {
-  func load(url: URL) {
-    DispatchQueue.global().async { [weak self] in
-      if let data = try? Data(contentsOf: url) {
-        if let image = UIImage(data: data) {
-          DispatchQueue.main.async {
-            self?.image = image
-          }
+    func load(url: URL) {
+        DispatchQueue.global().async { [weak self] in
+            if let data = try? Data(contentsOf: url) {
+                if let image = UIImage(data: data) {
+                    DispatchQueue.main.async {
+                        self?.image = image
+                    }
+                }
+            }
         }
-      }
     }
-  }
-  
-  func loadImageUrl(_ urlString: URL) {
-    af_setImage(withURL: urlString)
-  }
-  
+
+    func loadImageUrl(_ urlString: URL) {
+        af_setImage(withURL: urlString)
+    }
 }
-
-
-

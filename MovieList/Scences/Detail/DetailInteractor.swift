@@ -9,58 +9,53 @@
 import UIKit
 
 protocol DetailInteractorInterface {
-  func getMovieDetail(request: Detail.GetMovieDetail.Request)
-  var selectedMovie: MovieDetail? { get set }
-  var id: Int? { get set }
-  var voteCount:Int? { get set }
-  var voteAvg: Double? { get set}
-  var newVote: Double? { get set }
-  func calculateVote(request: Detail.SetVoting.Request)
+    func getMovieDetail(request: Detail.GetMovieDetail.Request)
+    var selectedMovie: MovieDetail? { get set }
+    var id: Int? { get set }
+    var voteCount: Int? { get set }
+    var voteAvg: Double? { get set }
+    var newVote: Double? { get set }
+    func calculateVote(request: Detail.SetVoting.Request)
 }
 
 class DetailInteractor: DetailInteractorInterface {
-  var presenter: DetailPresenterInterface!
-  var worker: MovieDetailWorker?
-  var selectedMovie: MovieDetail?
-  var id: Int?
-  var voteAvg: Double?
-  var voteCount: Int?
-  var newVote: Double?
-  
+    var presenter: DetailPresenterInterface!
+    var worker: MovieDetailWorker?
+    var selectedMovie: MovieDetail?
+    var id: Int?
+    var voteAvg: Double?
+    var voteCount: Int?
+    var newVote: Double?
 
-  // MARK: - Business logic
+    // MARK: - Business logic
 
-  func getMovieDetail(request: Detail.GetMovieDetail.Request) {
-    guard let id = id else { return }
-    worker?.getMovieDetail(id: id){ [weak self] result in
-      var response: Detail.GetMovieDetail.Response
-      switch result {
-      case .success(let data):
-        self?.selectedMovie = data
-        response = Detail.GetMovieDetail.Response(result: .success(data))
-    case .failure(let error):
-        print("________________________")
-        response = Detail.GetMovieDetail.Response(result: .failure(error))
-      }
-      self?.presenter.presentMovieDetail(response: response)
+    func getMovieDetail(request: Detail.GetMovieDetail.Request) {
+        guard let id = id else { return }
+        worker?.getMovieDetail(id: id) { [weak self] result in
+            var response: Detail.GetMovieDetail.Response
+            switch result {
+            case let .success(data):
+                self?.selectedMovie = data
+                response = Detail.GetMovieDetail.Response(result: .success(data))
+            case let .failure(error):
+                response = Detail.GetMovieDetail.Response(result: .failure(error))
+            }
+            self?.presenter.presentMovieDetail(response: response)
+        }
     }
-  }
-  
-  func calculateVote(request: Detail.SetVoting.Request) {
-    guard let id = id else { return }
-    voteCount = selectedMovie?.voteCount
-    let count = Double(voteCount ?? 0)
-    voteAvg = selectedMovie?.voteAverage
-    let avg = voteAvg ?? 0.0
-    newVote = ((avg*count)+(request.voteUser*2))/(count+1)
-    let data = [String(id): newVote]
-    UserDefaults.standard.set(data, forKey: "voteByUser")
-    let response = Detail.SetVoting.Response()
-    presenter.presentSetNewVoting(reponse: response)
-    
-  }
-  
+
+    func calculateVote(request: Detail.SetVoting.Request) {
+        guard let id = id else { return }
+        voteCount = selectedMovie?.voteCount
+        let count = Double(voteCount ?? 0)
+        voteAvg = selectedMovie?.voteAverage
+        let avg = voteAvg ?? 0.0
+        newVote = ((avg * count) + (request.voteUser * 2)) / (count + 1)
+//    var data = [String(id): newVote]
+        var retrieveDict = UserDefaults.standard.dictionary(forKey: "voteByUser") ?? [:]
+        retrieveDict[String(id)] = newVote
+        UserDefaults.standard.set(retrieveDict, forKey: "voteByUser")
+        let response = Detail.SetVoting.Response()
+        presenter.presentSetNewVoting(reponse: response)
+    }
 }
-
-
-

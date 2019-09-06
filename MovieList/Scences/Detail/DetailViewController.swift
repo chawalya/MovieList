@@ -13,9 +13,11 @@ protocol DetailViewControllerInterface: class {
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel)
     func displayNewVote(viewModel: Detail.SetVoting.ViewModel)
 }
+
 protocol DetailViewControllerDelegate: class {
-  func setNewVote()
+    func setNewVote()
 }
+
 class DetailViewController: UIViewController, DetailViewControllerInterface {
     var interactor: DetailInteractorInterface!
     var router: DetailRouter!
@@ -23,12 +25,13 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     @IBOutlet var TitleLabel: UILabel!
     @IBOutlet var DetailLabel: UILabel!
     @IBOutlet var starRating: CosmosView!
-  @IBOutlet weak var languageLabel: UILabel!
-  @IBOutlet weak var categoryLabel: UILabel!
-  // MARK: - Object lifecycle
-  
-  weak var delegate: DetailViewControllerDelegate?
-  
+    @IBOutlet var languageLabel: UILabel!
+    @IBOutlet var categoryLabel: UILabel!
+
+    // MARK: - Object lifecycle
+
+    weak var delegate: DetailViewControllerDelegate?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configure(viewController: self)
@@ -56,16 +59,15 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     override func viewDidLoad() {
         super.viewDidLoad()
         getMovieDetail()
-        starRating.didFinishTouchingCosmos = { [weak self] rating in
-            print("Rate \(rating)")
-           self?.calculateVote(vote: rating)
+        starRating.didFinishTouchingCosmos = { [weak self] rating in         
+            self?.calculateVote(vote: rating)
         }
     }
-  
-  func calculateVote(vote: Double){
-    let request = Detail.SetVoting.Request(voteUser: vote)
-    interactor.calculateVote(request: request)
-  }
+
+    func calculateVote(vote: Double) {
+        let request = Detail.SetVoting.Request(voteUser: vote)
+        interactor.calculateVote(request: request)
+    }
 
     // MARK: - Event handling
 
@@ -75,32 +77,31 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     }
 
     // MARK: - Display logic
-  func displayNewVote(viewModel: Detail.SetVoting.ViewModel){
-    delegate?.setNewVote()
-  }
-  
-    func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
-      let displayedMovie = viewModel.displayedMovie
-      switch viewModel.displayedMovie {
-      case .success(let displayedMovie):
-        if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
-          print("----------------------------------------------------")
-          print(posterUrl)
-            imageView.loadImageUrlDetail(url)
-        } else {
-        imageView.image = nil
-        }
-        languageLabel.text = "Language : \(displayedMovie.language)"
-        categoryLabel.text = "Category : \(displayedMovie.category)"
-        TitleLabel.text = displayedMovie.title
-        DetailLabel.text = displayedMovie.detail
-      case .failure(let error):
-        let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
-        present(alert, animated: true)
 
-  }
-}
-  
+    func displayNewVote(viewModel: Detail.SetVoting.ViewModel) {
+        delegate?.setNewVote()
+    }
+
+    func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
+        let displayedMovie = viewModel.displayedMovie
+        switch viewModel.displayedMovie {
+        case let .success(displayedMovie):
+            if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
+                print(posterUrl)
+                imageView.loadImageUrlDetail(url)
+            } else {
+                imageView.image = nil
+            }
+            languageLabel.text = displayedMovie.language
+            categoryLabel.text = displayedMovie.category
+            TitleLabel.text = displayedMovie.title
+            DetailLabel.text = displayedMovie.detail
+        case let .failure(error):
+            let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+            present(alert, animated: true)
+        }
+    }
+
     // MARK: - Router
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -10,22 +10,21 @@ import UIKit
 
 protocol MainViewControllerInterface: class {
   func displayMovieList(viewModel: Main.GetMovieList.ViewModel)
-  func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel)
+  func displaySelectMovie(viewModel: Main.SetSelectMovie.ViewModel)
   
 }
 class MainViewController: UIViewController, MainViewControllerInterface {
-  var currentPage: Int = 1
   var interactor: MainInteractorInterface!
   var router: MainRouter!
-  var sort: Main.GetMovieList.SortData = Main.GetMovieList.SortData.ASC
-  
-  @IBAction func sortButton(_ sender: Any) {
-    showAlert()
-  }
-  
-  @IBOutlet weak var tableView: UITableView!
+  var refreshControl = UIRefreshControl()
   var displayedMovies: [Main.GetMovieList.ViewModel.DisplayedMovie] = []
-  var totalPage: Int = 0
+  var sort: Main.GetMovieList.SortData?
+  @IBAction func sortButton(_ sender: Any) {
+    showSortingAlert()
+  }
+  @IBOutlet weak var tableView: UITableView!
+  
+  
   override func awakeFromNib() {
     super.awakeFromNib()
     configure(viewController: self)
@@ -54,58 +53,59 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     super.viewDidLoad()
     tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
     getMovieList()
-    
+    self.refreshControl = UIRefreshControl()
+    self.refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
+    self.tableView.addSubview(self.refreshControl)
   }
   
-  private func showAlert(){
+  @objc func pullToRefresh(){
+    let request = Main.PushToRefresh.Request(currentPage: 1,sort: sort ?? .ASC)
+      interactor.pushToRefresh(request: request)
+  }
+  
+  private func showSortingAlert() {
     let alert = UIAlertController(title: "Sort", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "ASC", style: .default, handler: { (_) in
+//      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: .ASC)
       self.sort = Main.GetMovieList.SortData.ASC
-      print("asc --------------------------------------------")
-      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: self.sort)
-      self.interactor.getMovieList(request: request)
-      self.tableView.reloadData()
+      let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
+      self.pushGetMovieListToInteractor(request: request)
     }))
     
     alert.addAction(UIAlertAction(title: "DESC", style: .default, handler: { (_) in
       self.sort = Main.GetMovieList.SortData.DESC
-      print("desc --------------------------------------------")
-      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: self.sort)
-      self.interactor.getMovieList(request: request)
-      self.tableView.reloadData()
+      let request = Main.GetMovieList.Request(useCache: false, sortType: .DESC)
+      self.pushGetMovieListToInteractor(request: request)
     }))
     
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
       
     }))
-    
     self.present(alert,animated: true,completion: nil)
   }
 
   // MARK: - Event handling
+  
+  func pushGetMovieListToInteractor(request: Main.GetMovieList.Request) {
+    self.interactor.getMovieList(request: request)
+    self.tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: false)
+  }
 
   func getMovieList() {
-    let request = Main.GetMovieList.Request(useCache: false, page: currentPage, sortType: sort)
+    let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
     interactor.getMovieList(request: request)
   }
-  
-  func updateMovieList() {
-    let request = Main.GetMovieList.Request(useCache: true, page: currentPage, sortType: sort)
+  func updateNewVoteMovieList() {
+    let request = Main.GetMovieList.Request(useCache: true, sortType: .ASC)
     interactor.getMovieList(request: request)
   }
-  
-//  func getLoadMore() {
-//    let request = Main.GetLoadMore.Request(page: <#T##Int#>)
-//    interactor.getLoadMore(request: request)
-//  }
-
   // MARK: - Display logic
 
   func displayMovieList(viewModel: Main.GetMovieList.ViewModel) {
     switch viewModel.content {
     case .success(let data):
       displayedMovies = data.displayedMovies
-      totalPage = data.totalPage
+      refreshControl.endRefreshing()
       tableView.reloadData()
     case .failure(let error):
       let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
@@ -113,23 +113,10 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     }
   }
   
-
-  
-  func displaySetSelectMovie(viewModel: Main.SetSelectMovie.ViewModel){
+  func displaySelectMovie(viewModel: Main.SetSelectMovie.ViewModel){
     router.navigateToDetail()
   }
 
-  
-//  // MARK: - Router
-//
-//  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//    router.passDataToNextScene(segue: segue)
-//  }
-//
-//  @IBAction func unwindToMainViewController(from segue: UIStoryboardSegue) {
-//    print("unwind...")
-//    router.passDataToNextScene(segue: segue)
-//  }
 }
 extension MainViewController: UITableViewDataSource, UITableViewDelegate{
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -148,14 +135,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
   func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
     if indexPath.row == (displayedMovies.count - 1)
     {
-      currentPage += 1
-      if currentPage <= totalPage {
-        getMovieList()
-      }
+//      currentPage += 1
+//      if currentPage <= totalPage {
+//        getMovieList()
+//      }
       
+      let request = Main.SetLoadMore.Request(sort: sort ?? .ASC)
+      interactor.setCountPage(request: request)
       //find lastCell in tableView
     }
   }
+  
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
     let request = Main.SetSelectMovie.Request(index: indexPath.row)
@@ -164,7 +154,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate{
 }
 extension MainViewController: DetailViewControllerDelegate{
   func setNewVote() {
-    updateMovieList()
+    updateNewVoteMovieList()
   }
 }
 

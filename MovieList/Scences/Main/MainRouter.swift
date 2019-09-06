@@ -19,7 +19,7 @@ class MainRouter: MainRouterInput {
   
   func navigateToDetail() {
     if let detailViewController = UIStoryboard(name: "Detail", bundle: nil).instantiateInitialViewController() as? DetailViewController {
-      detailViewController.interactor.id = viewController.interactor.id
+      detailViewController.interactor.id = viewController.interactor.selectedMovie?.id
       detailViewController.delegate = viewController
       viewController.navigationController?.pushViewController(detailViewController, animated: true)
       

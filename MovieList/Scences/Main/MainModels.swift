@@ -9,6 +9,10 @@
 import UIKit
 
 struct Main {
+  enum SortData {
+    case ASC
+    case DESC
+  }
   /// This structure represents a use case
   struct GetMovieList {
     /// Data struct sent to Interactor
@@ -16,9 +20,11 @@ struct Main {
       case ASC
       case DESC
     }
+
+
     struct Request {
       let useCache: Bool
-      let page: Int
+//      let page: Int
       let sortType: SortData
     }
     /// Data struct sent to Presenter
@@ -58,15 +64,33 @@ struct Main {
   struct SetLoadMore {
     /// Data struct sent to Interactor
     struct Request {
+      let sort: GetMovieList.SortData
     }
     /// Data struct sent to Presenter
     struct Response {
-      let TotalPage: Int
+      let totalPage: Int
+      let currentPage: Int
     }
     /// Data struct sent to ViewController
     struct ViewModel {
     }
   }
+  
+  struct PushToRefresh {
+    /// Data struct sent to Interactor
+    struct Request {
+      let currentPage: Int
+      let sort: GetMovieList.SortData
+    }
+    /// Data struct sent to Presenter
+    struct Response {
+      
+    }
+    /// Data struct sent to ViewController
+    struct ViewModel {
+    }
+  }
+  
   }
 
   
