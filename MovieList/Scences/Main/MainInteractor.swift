@@ -9,103 +9,96 @@
 import UIKit
 
 protocol MainInteractorInterface {
-  func getMovieList(request: Main.GetMovieList.Request)
-  func setSelectMovie(request: Main.SetSelectMovie.Request)
-  func setCountPage(request: Main.SetLoadMore.Request)
-  func pushToRefresh(request: Main.PushToRefresh.Request)
-  var selectedMovie: Movie? { get }
-  var id: Int? { get set }
+    func getMovieList(request: Main.GetMovieList.Request)
+    func setSelectMovie(request: Main.SetSelectMovie.Request)
+    func setCountPage(request: Main.SetLoadMore.Request)
+    func pushToRefresh(request: Main.PushToRefresh.Request)
+    var selectedMovie: Movie? { get }
+    var id: Int? { get set }
 }
 
 class MainInteractor: MainInteractorInterface {
-  
-  
-//  func getLoadMore(request: Main.GetLoadMore.Request) {
-//
-//  }
-  var presenter: MainPresenterInterface!
-  var worker: MovieWorker?
-  var id: Int?
-  var selectedMovie: Movie?
-  var movieList: MovieList?
-  var loading = false
-  var currentPage: Int = 1
-  var totalPage: Int = 0
-  var sortCurrent: Main.GetMovieList.SortData?
-  // MARK: - Business logic
+    var presenter: MainPresenterInterface!
+    var worker: MovieWorker?
+    var id: Int?
+    var selectedMovie: Movie?
+    var movieList: MovieList?
+    var loading = false
+    var currentPage: Int = 1
+    var totalPage: Int = 0
+    var sortCurrent: Main.GetMovieList.SortData?
 
-  func getMovieList(request: Main.GetMovieList.Request) {
-    typealias Response = Main.GetMovieList.Response
+    // MARK: - Business logic
+
+    func getMovieList(request: Main.GetMovieList.Request) {
+        typealias Response = Main.GetMovieList.Response
 //    let page = request.page
-    var page = currentPage
-    let sort = request.sortType
-    if sortCurrent != sort {
-      page = 1
-      currentPage = 1
-      sortCurrent = sort
-    }
-    if let movieList = movieList, request.useCache {
-      let response = Response(result: .success(movieList))
-      presenter.presentMovieList(response: response)
-    } else {
-      if !loading { //false
-        loading =  true
-        worker?.getMovieList(page: page,sort: sort) { [weak self] (result) in
-          self?.loading = false
-          var response: Response
-          switch result {
-          case .success(let data):
-            var results: [Movie]
-            if page == 1{
-              self?.movieList = nil
-            }
-            if let movieList = self?.movieList {
-              results = movieList.results + data.results
-            } else {
-              results = data.results
-              self?.totalPage = data.totalPages
-            }
-            let movieList = MovieList(page: data.page,
-                                      totalResults: data.totalResults,
-                                      totalPages: data.totalPages,
-                                      results: results)
-            self?.movieList = movieList
-            response = Response(result: .success(movieList))
-        
-          case .failure(let error):
-            response = Response(result: .failure(error))
-            
-          }
-          self?.presenter.presentMovieList(response: response)
+        var page = currentPage
+        let sort = request.sortType
+        if sortCurrent != sort {
+            page = 1
+            currentPage = 1
+            sortCurrent = sort
         }
-      }
+        if let movieList = movieList, request.useCache {
+            let response = Response(result: .success(movieList))
+            presenter.presentMovieList(response: response)
+        } else {
+            if !loading { // false
+                loading = true
+                worker?.getMovieList(page: page, sort: sort) { [weak self] result in
+                    self?.loading = false
+                    var response: Response
+                    switch result {
+                    case let .success(data):
+                        var results: [Movie]
+                        if page == 1 {
+                            self?.movieList = nil
+                        }
+                        if let movieList = self?.movieList {
+                            results = movieList.results + data.results
+                        } else {
+                            results = data.results
+                            self?.totalPage = data.totalPages
+                        }
+                        let movieList = MovieList(page: data.page,
+                                                  totalResults: data.totalResults,
+                                                  totalPages: data.totalPages,
+                                                  results: results)
+                        self?.movieList = movieList
+                        response = Response(result: .success(movieList))
+
+                    case let .failure(error):
+                        response = Response(result: .failure(error))
+                    }
+                    self?.presenter.presentMovieList(response: response)
+                }
+            }
+        }
     }
-  }
-  
-  func setSelectMovie(request: Main.SetSelectMovie.Request) {
-    let index = request.index
-    selectedMovie = movieList?.results[index]
-    self.id = selectedMovie?.id
-    let response = Main.SetSelectMovie.Response()
-    presenter.presentSetSelectMovie(reponse: response)
-  }
-  
-  func setCountPage(request: Main.SetLoadMore.Request){
-    var sort = request.sort
-    currentPage += 1
-    if currentPage <= totalPage{
-      let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
-      getMovieList(request: request)
-    }    
-  }
-  
-  func pushToRefresh(request: Main.PushToRefresh.Request){
-    var sort = request.sort
-      currentPage = request.currentPage
-    movieList = nil
-      let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
-      getMovieList(request: request)
-    
-  }
-  
+
+    func setSelectMovie(request: Main.SetSelectMovie.Request) {
+        let index = request.index
+        selectedMovie = movieList?.results[index]
+        id = selectedMovie?.id
+        let response = Main.SetSelectMovie.Response()
+        presenter.presentSetSelectMovie(reponse: response)
+    }
+
+    func setCountPage(request: Main.SetLoadMore.Request) {
+        var sort = request.sort
+        currentPage += 1
+        if currentPage <= totalPage {
+            let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
+            getMovieList(request: request)
+        }
+    }
+
+    func pushToRefresh(request: Main.PushToRefresh.Request) {
+        var sort = request.sort
+        currentPage = request.currentPage
+        movieList = nil
+        let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
+        getMovieList(request: request)
+    }
 }

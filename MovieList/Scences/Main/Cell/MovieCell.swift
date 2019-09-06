@@ -29,7 +29,7 @@ class MovieCell: UITableViewCell {
         backdrop.image = nil
         titleLabel.text = displayedMovies.name
         ratingLabel.text = displayedMovies.vote
-        popLabel.text = "Popularity : \(displayedMovies.popularity)"
+        popLabel.text = displayedMovies.popularity
         if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
             moviePoster.loadImageUrl(url)
         }
