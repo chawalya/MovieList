@@ -16,8 +16,8 @@ class MovieCell: UITableViewCell {
   @IBOutlet weak var backdrop: UIImageView!
   @IBOutlet weak var ratingLabel: UILabel!
   @IBOutlet weak var popLabel: UILabel!
+  @IBOutlet weak var voteCountLabel: UILabel!
   
-
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -30,7 +30,8 @@ class MovieCell: UITableViewCell {
     moviePoster.image = nil
     backdrop.image = nil
     titleLabel.text = displayedMovies.name
-    popLabel.text = displayedMovies.vote
+    ratingLabel.text = displayedMovies.vote
+    popLabel.text = "Popularity : \(displayedMovies.popularity)"
     if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
       moviePoster.loadImageUrl(url)
     }

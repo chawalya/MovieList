@@ -23,8 +23,9 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     @IBOutlet var TitleLabel: UILabel!
     @IBOutlet var DetailLabel: UILabel!
     @IBOutlet var starRating: CosmosView!
-
-    // MARK: - Object lifecycle
+  @IBOutlet weak var languageLabel: UILabel!
+  @IBOutlet weak var categoryLabel: UILabel!
+  // MARK: - Object lifecycle
   
   weak var delegate: DetailViewControllerDelegate?
   
@@ -83,10 +84,14 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
       switch viewModel.displayedMovie {
       case .success(let displayedMovie):
         if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {
+          print("----------------------------------------------------")
+          print(posterUrl)
             imageView.loadImageUrlDetail(url)
         } else {
         imageView.image = nil
         }
+        languageLabel.text = "Language : \(displayedMovie.language)"
+        categoryLabel.text = "Category : \(displayedMovie.category)"
         TitleLabel.text = displayedMovie.title
         DetailLabel.text = displayedMovie.detail
       case .failure(let error):

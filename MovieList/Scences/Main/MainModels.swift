@@ -12,6 +12,10 @@ struct Main {
   /// This structure represents a use case
   struct GetMovieList {
     /// Data struct sent to Interactor
+    enum SortData {
+      case ASC
+      case DESC
+    }
     struct Request {
       let useCache: Bool
       let page: Int

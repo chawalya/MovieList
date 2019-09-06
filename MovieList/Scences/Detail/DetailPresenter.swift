@@ -29,9 +29,12 @@ class DetailPresenter: DetailPresenterInterface {
         detail: movie?.overview ?? "",
       category: movie?.genres.first?.name ?? "",
       language: movie?.originalLanguage ?? "",
-      posterUrl: "https://image.tmdb.org/t/p/original\(movie?.posterPath)")
+      posterUrl: "https://image.tmdb.org/t/p/original\(movie?.posterPath ?? "")")
+      
     
 //      let ViewModelsend = DisplayedMovie(DisplayedMovie: displayMovie)
+      print(displayMovie.category)
+      print(displayMovie.language)
       viewModel = ViewModel(displayedMovie: .success(displayMovie))
 
 //    viewController.displayMovieDetail(viewModel: viewModel)
@@ -39,7 +42,7 @@ class DetailPresenter: DetailPresenterInterface {
       viewModel = ViewModel(displayedMovie: .failure(error))
     }
     viewController.displayMovieDetail(viewModel: viewModel)
-
+    
 
   }
   func presentSetNewVoting(reponse: Detail.SetVoting.Response){

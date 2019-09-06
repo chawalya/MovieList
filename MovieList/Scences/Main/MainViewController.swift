@@ -19,8 +19,9 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   var router: MainRouter!
   
   @IBAction func sortButton(_ sender: Any) {
-    
+    showAlert()
   }
+  
   @IBOutlet weak var tableView: UITableView!
   var displayedMovies: [Main.GetMovieList.ViewModel.DisplayedMovie] = []
   var totalPage: Int = 0
@@ -30,7 +31,7 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   }
 
   // MARK: - Configuration
-
+  
   private func configure(viewController: MainViewController) {
     let router = MainRouter()
     router.viewController = viewController
@@ -53,6 +54,24 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
     getMovieList()
     
+  }
+  
+  private func showAlert(){
+    let alert = UIAlertController(title: "Sort", message: nil, preferredStyle: .alert)
+    
+    alert.addAction(UIAlertAction(title: "ASC", style: .default, handler: { (_) in
+      
+    }))
+    
+    alert.addAction(UIAlertAction(title: "DESC", style: .default, handler: { (_) in
+      
+    }))
+    
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
+      
+    }))
+    
+    self.present(alert,animated: true,completion: nil)
   }
 
   // MARK: - Event handling
