@@ -9,25 +9,24 @@
 import UIKit
 
 protocol MovieDetailProtocol {
-  func getMovieDetail(id: Int, completion: @escaping (Result<MovieDetail>) -> Void)
+    func getMovieDetail(id: Int, completion: @escaping (Result<MovieDetail>) -> Void)
 }
 
-class MovieDetailWorker  {
-  
-  var store: MovieDetailProtocol
-  
-  init(store: MovieDetailProtocol) {
-    self.store = store
-  }
-  
-  // MARK: - Business Logic
-  
-  func getMovieDetail(id: Int, completion: @escaping (Result<MovieDetail>) -> Void) {
-    // NOTE: Do the work
-    
-    store.getMovieDetail(id: id) {
-      // The worker may perform some small business logic before returning the result to the Interactor
-      completion($0)
+class MovieDetailWorker {
+    var store: MovieDetailProtocol
+
+    init(store: MovieDetailProtocol) {
+        self.store = store
     }
-  }
+
+    // MARK: - Business Logic
+
+    func getMovieDetail(id: Int, completion: @escaping (Result<MovieDetail>) -> Void) {
+        // NOTE: Do the work
+
+        store.getMovieDetail(id: id) {
+            // The worker may perform some small business logic before returning the result to the Interactor
+            completion($0)
+        }
+    }
 }
