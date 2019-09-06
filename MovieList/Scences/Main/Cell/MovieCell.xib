@@ -51,12 +51,6 @@
                                     <constraint firstAttribute="height" constant="30" id="y19-11-L6d"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vote count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hbs-T5-dM7">
-                                <rect key="frame" x="116" y="64" width="180" height="16"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fEx-3w-xr9">
                                 <rect key="frame" x="154" y="100" width="11" height="21.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -77,14 +71,10 @@
                             <constraint firstItem="kGj-zZ-5AX" firstAttribute="leading" secondItem="pSr-p4-DLH" secondAttribute="trailing" constant="16" id="W4z-rn-F9G"/>
                             <constraint firstAttribute="bottom" secondItem="Qk4-Sd-GZv" secondAttribute="bottom" constant="8" id="cbl-h3-YMf"/>
                             <constraint firstItem="qDx-nH-Oqw" firstAttribute="leading" secondItem="pSr-p4-DLH" secondAttribute="trailing" constant="16" id="edv-qC-NWc"/>
-                            <constraint firstItem="Hbs-T5-dM7" firstAttribute="top" secondItem="kGj-zZ-5AX" secondAttribute="bottom" constant="8" id="ehX-Eb-g9X"/>
                             <constraint firstItem="pSr-p4-DLH" firstAttribute="top" secondItem="mUB-Un-Tiu" secondAttribute="top" constant="15" id="fyv-kX-FlQ"/>
                             <constraint firstItem="DJo-Rb-Jbh" firstAttribute="leading" secondItem="mUB-Un-Tiu" secondAttribute="leading" id="jbO-j6-GkR"/>
-                            <constraint firstAttribute="trailing" secondItem="Hbs-T5-dM7" secondAttribute="trailing" constant="8" id="kGd-mm-P4p"/>
                             <constraint firstItem="qDx-nH-Oqw" firstAttribute="top" secondItem="mUB-Un-Tiu" secondAttribute="top" constant="15" id="mPs-jy-xpd"/>
                             <constraint firstItem="DJo-Rb-Jbh" firstAttribute="top" secondItem="mUB-Un-Tiu" secondAttribute="top" id="q9u-5F-280"/>
-                            <constraint firstItem="Qk4-Sd-GZv" firstAttribute="top" secondItem="Hbs-T5-dM7" secondAttribute="bottom" constant="13.5" id="tLw-h0-skM"/>
-                            <constraint firstItem="Hbs-T5-dM7" firstAttribute="leading" secondItem="pSr-p4-DLH" secondAttribute="trailing" constant="16" id="wO6-6A-Vsl"/>
                             <constraint firstItem="fEx-3w-xr9" firstAttribute="leading" secondItem="Qk4-Sd-GZv" secondAttribute="trailing" constant="8" id="yoR-Ex-j7A"/>
                         </constraints>
                     </view>
@@ -103,7 +93,6 @@
                 <outlet property="popLabel" destination="kGj-zZ-5AX" id="ZtL-6h-j98"/>
                 <outlet property="ratingLabel" destination="fEx-3w-xr9" id="hH3-q9-N7l"/>
                 <outlet property="titleLabel" destination="qDx-nH-Oqw" id="vfg-BE-aX8"/>
-                <outlet property="voteCountLabel" destination="Hbs-T5-dM7" id="o1b-ug-HAL"/>
             </connections>
             <point key="canvasLocation" x="-30.434782608695656" y="136.60714285714286"/>
         </tableViewCell>

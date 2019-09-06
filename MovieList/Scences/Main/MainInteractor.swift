@@ -31,15 +31,19 @@ class MainInteractor: MainInteractorInterface {
   func getMovieList(request: Main.GetMovieList.Request) {
     typealias Response = Main.GetMovieList.Response
     let page = request.page
+    let sort = request.sortType
     if let movieList = movieList, request.useCache {
       let response = Response(result: .success(movieList))
       presenter.presentMovieList(response: response)
     } else {
-      worker?.getMovieList(page:page) { [weak self] (result) in
+      worker?.getMovieList(page:page,sort:sort) { [weak self] (result) in
         var response: Response
         switch result {
         case .success(let data):
           var results: [Movie]
+          if page == 1{
+            self?.movieList = nil
+          }
           if let movieList = self?.movieList {
             results = movieList.results + data.results
           } else {

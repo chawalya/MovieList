@@ -19,6 +19,7 @@ struct Main {
     struct Request {
       let useCache: Bool
       let page: Int
+      let sortType: SortData
     }
     /// Data struct sent to Presenter
     struct Response {

@@ -17,6 +17,7 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   var currentPage: Int = 1
   var interactor: MainInteractorInterface!
   var router: MainRouter!
+  var sort: Main.GetMovieList.SortData = Main.GetMovieList.SortData.ASC
   
   @IBAction func sortButton(_ sender: Any) {
     showAlert()
@@ -58,13 +59,20 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   
   private func showAlert(){
     let alert = UIAlertController(title: "Sort", message: nil, preferredStyle: .alert)
-    
     alert.addAction(UIAlertAction(title: "ASC", style: .default, handler: { (_) in
-      
+      self.sort = Main.GetMovieList.SortData.ASC
+      print("asc --------------------------------------------")
+      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: self.sort)
+      self.interactor.getMovieList(request: request)
+      self.tableView.reloadData()
     }))
     
     alert.addAction(UIAlertAction(title: "DESC", style: .default, handler: { (_) in
-      
+      self.sort = Main.GetMovieList.SortData.DESC
+      print("desc --------------------------------------------")
+      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: self.sort)
+      self.interactor.getMovieList(request: request)
+      self.tableView.reloadData()
     }))
     
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
@@ -77,12 +85,12 @@ class MainViewController: UIViewController, MainViewControllerInterface {
   // MARK: - Event handling
 
   func getMovieList() {
-    let request = Main.GetMovieList.Request(useCache: false, page: currentPage)
+    let request = Main.GetMovieList.Request(useCache: false, page: currentPage, sortType: sort)
     interactor.getMovieList(request: request)
   }
   
   func updateMovieList() {
-    let request = Main.GetMovieList.Request(useCache: true, page: currentPage)
+    let request = Main.GetMovieList.Request(useCache: true, page: currentPage, sortType: sort)
     interactor.getMovieList(request: request)
   }
   

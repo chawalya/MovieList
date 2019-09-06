@@ -9,7 +9,7 @@
 import Foundation
 
 protocol MovieStoreProtocol {
-  func getMovieList(page:Int,_ completion: @escaping (Result<MovieList>) -> Void)
+  func getMovieList(page:Int,sort: Main.GetMovieList.SortData,_ completion: @escaping (Result<MovieList>) -> Void)
 }
 
 class MovieWorker {
@@ -22,9 +22,9 @@ class MovieWorker {
   
   // MARK: - Business Logic
   
-  func getMovieList(page:Int,_ completion: @escaping (Result<MovieList>) -> Void) {
+  func getMovieList(page:Int,sort: Main.GetMovieList.SortData,_ completion: @escaping (Result<MovieList>) -> Void) {
     // NOTE: Do the work
-    store.getMovieList(page:page) {
+    store.getMovieList(page:page,sort: sort) {
       // The worker may perform some small business logic before returning the result to the Interactor
       completion($0)
     }
