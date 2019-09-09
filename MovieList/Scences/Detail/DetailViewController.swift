@@ -61,6 +61,7 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
         getMovieDetail()
         starRating.didFinishTouchingCosmos = { [weak self] rating in         
             self?.calculateVote(vote: rating)
+          
         }
     }
 
@@ -98,6 +99,8 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
             DetailLabel.text = displayedMovie.detail
         case let .failure(error):
             let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
+            }))
             present(alert, animated: true)
         }
     }
