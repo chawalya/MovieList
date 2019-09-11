@@ -26,7 +26,7 @@ class MainInteractor: MainInteractorInterface {
     var currentPage: Int = 1
     var totalPage: Int = 0
     var sortCurrent: Main.GetMovieList.SortData?
-    var sort: Main.GetMovieList.SortData?
+//    var sort: Main.GetMovieList.SortData?
 
 
     // MARK: - Business logic
@@ -35,11 +35,11 @@ class MainInteractor: MainInteractorInterface {
         typealias Response = Main.GetMovieList.Response
 //    let page = request.page
         var page = currentPage
-        sort = request.sortType
-        if sortCurrent != sort {
+//        sort = request.sortType
+        if sortCurrent != request.sortType {
             page = 1
             currentPage = 1
-            sortCurrent = sort
+            sortCurrent = request.sortType
         }
         if let movieList = movieList, request.useCache {
             let response = Response(result: .success(movieList))
@@ -47,7 +47,7 @@ class MainInteractor: MainInteractorInterface {
         } else {
             if !loading { // false
                 loading = true
-                worker?.getMovieList(page: page, sort: sort ?? .ASC) { [weak self] result in
+                worker?.getMovieList(page: page, sort: request.sortType ?? .ASC) { [weak self] result in
                     self?.loading = false
                     var response: Response
                     switch result {
@@ -86,10 +86,10 @@ class MainInteractor: MainInteractorInterface {
     }
 
     func setCountPage(request: Main.SetLoadMore.Request) {
-        var sort = request.sort
+//        var sort = request.sort
         currentPage += 1
         if currentPage <= totalPage {
-            let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
+            let request = Main.GetMovieList.Request(useCache: false, sortType: request.sort)
             getMovieList(request: request)
         }
     }
@@ -97,7 +97,7 @@ class MainInteractor: MainInteractorInterface {
     func pullToRefresh(request: Main.PullToRefresh.Request) {
         currentPage = request.currentPage
         movieList = nil
-        let request = Main.GetMovieList.Request(useCache: false, sortType: sort ?? .ASC)
+        let request = Main.GetMovieList.Request(useCache: false, sortType: sortCurrent ?? .ASC)
         getMovieList(request: request)
     }
 }
