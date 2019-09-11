@@ -51,7 +51,6 @@ class DetailInteractor: DetailInteractorInterface {
         voteAvg = selectedMovie?.voteAverage
         let avg = voteAvg ?? 0.0
         newVote = ((avg * count) + (request.voteUser * 2)) / (count + 1)
-//    var data = [String(id): newVote]
         var retrieveDict = UserDefaults.standard.dictionary(forKey: "voteByUser") ?? [:]
         retrieveDict[String(id)] = newVote
         UserDefaults.standard.set(retrieveDict, forKey: "voteByUser")

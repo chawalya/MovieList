@@ -26,16 +26,13 @@ class MainInteractor: MainInteractorInterface {
     var currentPage: Int = 1
     var totalPage: Int = 0
     var sortCurrent: Main.GetMovieList.SortData?
-//    var sort: Main.GetMovieList.SortData?
 
 
     // MARK: - Business logic
 
     func getMovieList(request: Main.GetMovieList.Request) {
         typealias Response = Main.GetMovieList.Response
-//    let page = request.page
         var page = currentPage
-//        sort = request.sortType
         if sortCurrent != request.sortType {
             page = 1
             currentPage = 1
@@ -86,7 +83,6 @@ class MainInteractor: MainInteractorInterface {
     }
 
     func setCountPage(request: Main.SetLoadMore.Request) {
-//        var sort = request.sort
         currentPage += 1
         if currentPage <= totalPage {
             let request = Main.GetMovieList.Request(useCache: false, sortType: request.sort)

@@ -23,7 +23,6 @@ class DetailPresenter: DetailPresenterInterface {
         var viewModel: ViewModel
         switch response.result {
         case let .success(movie):
-//    guard let movie = response.result else { return }
             let displayMovie = Detail.GetMovieDetail.ViewModel.DisplayedMovie(
                 title: movie?.title ?? "",
                 detail: movie?.overview ?? "",
@@ -31,12 +30,10 @@ class DetailPresenter: DetailPresenterInterface {
                 language: "Language : \(movie?.originalLanguage ?? "")",
                 posterUrl: "https://image.tmdb.org/t/p/original\(movie?.posterPath ?? "")")
 
-//      let ViewModelsend = DisplayedMovie(DisplayedMovie: displayMovie)
             print(displayMovie.category)
             print(displayMovie.language)
             viewModel = ViewModel(displayedMovie: .success(displayMovie))
 
-        //    viewController.displayMovieDetail(viewModel: viewModel)
         case let .failure(error):
             viewModel = ViewModel(displayedMovie: .failure(error))
         }

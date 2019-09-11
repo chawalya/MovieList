@@ -66,7 +66,6 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     private func showSortingAlert() {
         let alert = UIAlertController(title: "Sort", message: nil, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "ASC", style: .default, handler: { _ in
-//      let request = Main.GetMovieList.Request(useCache: false, page: 1, sortType: .ASC)
             self.sort = Main.GetMovieList.SortData.ASC
             let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
             self.pushGetMovieListToInteractor(request: request)
@@ -136,13 +135,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if indexPath.row == (displayedMovies.count - 1) {
-//      currentPage += 1
-//      if currentPage <= totalPage {
-//        getMovieList()
-//      }
             let request = Main.SetLoadMore.Request(sort: sort ?? .ASC)
             interactor.setCountPage(request: request)
-            // find lastCell in tableView
         }
     }
 
