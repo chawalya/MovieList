@@ -60,7 +60,7 @@ class MainViewController: UIViewController, MainViewControllerInterface {
 
     @objc func pullToRefresh() {
         let request = Main.PullToRefresh.Request(currentPage: 1)
-        interactor.pushToRefresh(request: request)
+        interactor.pullToRefresh(request: request)
     }
 
     private func showSortingAlert() {

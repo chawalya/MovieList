@@ -12,7 +12,7 @@ protocol MainInteractorInterface {
     func getMovieList(request: Main.GetMovieList.Request)
     func setSelectMovie(request: Main.SetSelectMovie.Request)
     func setCountPage(request: Main.SetLoadMore.Request)
-    func pushToRefresh(request: Main.PullToRefresh.Request)
+    func pullToRefresh(request: Main.PullToRefresh.Request)
     var selectedMovie: Movie? { get }
 
 }
@@ -94,7 +94,7 @@ class MainInteractor: MainInteractorInterface {
         }
     }
 
-    func pushToRefresh(request: Main.PullToRefresh.Request) {
+    func pullToRefresh(request: Main.PullToRefresh.Request) {
         currentPage = request.currentPage
         movieList = nil
         let request = Main.GetMovieList.Request(useCache: false, sortType: sort ?? .ASC)
