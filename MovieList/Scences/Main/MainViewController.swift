@@ -52,7 +52,7 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.register(UINib(nibName: "MovieCell", bundle: nil), forCellReuseIdentifier: "MovieCell")
-        getMovieList()
+        getMovieList(useCache: false)
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(pullToRefresh), for: .valueChanged)
         tableView.addSubview(refreshControl)
@@ -90,13 +90,8 @@ class MainViewController: UIViewController, MainViewControllerInterface {
         tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: UITableView.ScrollPosition.top, animated: false)
     }
 
-    func getMovieList() {
-        let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
-        interactor.getMovieList(request: request)
-    }
-
-    func updateNewVoteMovieList() {
-        let request = Main.GetMovieList.Request(useCache: true, sortType: .ASC)
+  func getMovieList(useCache:Bool) {
+        let request = Main.GetMovieList.Request(useCache: useCache, sortType: .ASC)
         interactor.getMovieList(request: request)
     }
 
@@ -106,12 +101,14 @@ class MainViewController: UIViewController, MainViewControllerInterface {
         switch viewModel.content {
         case let .success(data):
             displayedMovies = data.displayedMovies
-            refreshControl.endRefreshing()
             tableView.reloadData()
         case let .failure(error):
             let alert = UIAlertController(title: error.localizedDescription, message: nil, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+            }))
             present(alert, animated: true)
         }
+        refreshControl.endRefreshing()
     }
 
     func displaySelectMovie(viewModel: Main.SetSelectMovie.ViewModel) {
@@ -128,8 +125,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieCell",
                                                        for: indexPath) as? MovieCell else {
             return UITableViewCell()
-        }
-        cell.updateUI(displayedMovies[indexPath.row])
+      }
+      cell.updateUI(displayedMovies[safe: indexPath.row] ?? Main.GetMovieList.ViewModel.DisplayedMovie(name: "", popularity: "", vote: "", backdropUrl: URL(string: "")!, posterUrl: URL(string: "")!))
         return cell
     }
 
@@ -149,6 +146,15 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension MainViewController: DetailViewControllerDelegate {
     func setNewVote() {
-        updateNewVoteMovieList()
+//      updateNewVoteMovieList
+        getMovieList(useCache: true)
     }
+}
+
+extension Collection {
+  
+  /// Returns the element at the specified index if it is within bounds, otherwise nil.
+  subscript (safe index: Index) -> Element? {
+    return indices.contains(index) ? self[index] : nil
+  }
 }

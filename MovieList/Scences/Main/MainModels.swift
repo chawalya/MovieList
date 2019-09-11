@@ -39,7 +39,7 @@ struct Main {
                 let name: String
                 let popularity: String
                 let vote: String
-                let backdropUrl, posterUrl: String?
+                let backdropUrl, posterUrl: URL?
             }
 
             struct MovieViewModel {

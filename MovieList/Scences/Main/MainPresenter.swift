@@ -34,8 +34,9 @@ class MainPresenter: MainPresenterInterface {
                 return DisplayedMovie(name: element.title,
                                       popularity: "Popularity : \(element.popularity)",
                                       vote: "\(vote)",
-                                      backdropUrl: "https://image.tmdb.org/t/p/original\(element.backdropPath ?? "")",
-                                      posterUrl: "https://image.tmdb.org/t/p/original\(element.posterPath ?? "")")
+
+                                      backdropUrl: urlbackdropUrl(path: element.backdropPath ?? ""),
+                                      posterUrl: urlposterUrl(path: element.posterPath ?? ""))
             }
             let movieViewModel = MovieViewModel(displayedMovies: displayedMovies, totalPage: totalPage)
             viewModel = ViewModel(content: .success(movieViewModel))
@@ -48,6 +49,22 @@ class MainPresenter: MainPresenterInterface {
     func presentSetSelectMovie(reponse: Main.SetSelectMovie.Response) {
         let viewModel = Main.SetSelectMovie.ViewModel()
         viewController.displaySelectMovie(viewModel: viewModel)
+    }
+
+    func urlposterUrl(path: String) -> URL {
+        var pathUrl = "https://image.tmdb.org/t/p/original\(path)"
+        guard let url = URL(string: pathUrl) else {
+            return URL(fileURLWithPath: "")
+        }
+        return url
+    }
+
+    func urlbackdropUrl(path: String) -> URL {
+        var pathUrl = "https://image.tmdb.org/t/p/original\(path)"
+        guard let url = URL(string: pathUrl) else {
+            return URL(fileURLWithPath: "")
+        }
+        return url
     }
 
     func presentSetTotalPage(reponse: Main.SetLoadMore.Response) {

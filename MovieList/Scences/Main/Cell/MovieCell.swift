@@ -30,12 +30,9 @@ class MovieCell: UITableViewCell {
         titleLabel.text = displayedMovies.name
         ratingLabel.text = displayedMovies.vote
         popLabel.text = displayedMovies.popularity
-        if let posterUrl = displayedMovies.posterUrl, let url = URL(string: posterUrl) {
-            moviePoster.loadImageUrl(url)
-        }
-        if let backdropUrl = displayedMovies.backdropUrl, let url = URL(string: backdropUrl) {
-            backdrop.loadImageUrl(url)
-        }
+      moviePoster.loadImageUrl(displayedMovies.posterUrl ?? URL.init(fileURLWithPath: ""))
+      backdrop.loadImageUrl(displayedMovies.backdropUrl ?? URL.init(fileURLWithPath: ""))
+      
     }
 }
 
