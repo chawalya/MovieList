@@ -12,21 +12,22 @@ protocol MainInteractorInterface {
     func getMovieList(request: Main.GetMovieList.Request)
     func setSelectMovie(request: Main.SetSelectMovie.Request)
     func setCountPage(request: Main.SetLoadMore.Request)
-    func pushToRefresh(request: Main.PushToRefresh.Request)
+    func pushToRefresh(request: Main.PullToRefresh.Request)
     var selectedMovie: Movie? { get }
-    var id: Int? { get set }
+
 }
 
 class MainInteractor: MainInteractorInterface {
     var presenter: MainPresenterInterface!
     var worker: MovieWorker?
-    var id: Int?
     var selectedMovie: Movie?
     var movieList: MovieList?
     var loading = false
     var currentPage: Int = 1
     var totalPage: Int = 0
     var sortCurrent: Main.GetMovieList.SortData?
+    var sort: Main.GetMovieList.SortData?
+
 
     // MARK: - Business logic
 
@@ -34,7 +35,7 @@ class MainInteractor: MainInteractorInterface {
         typealias Response = Main.GetMovieList.Response
 //    let page = request.page
         var page = currentPage
-        let sort = request.sortType
+        sort = request.sortType
         if sortCurrent != sort {
             page = 1
             currentPage = 1
@@ -46,7 +47,7 @@ class MainInteractor: MainInteractorInterface {
         } else {
             if !loading { // false
                 loading = true
-                worker?.getMovieList(page: page, sort: sort) { [weak self] result in
+                worker?.getMovieList(page: page, sort: sort ?? .ASC) { [weak self] result in
                     self?.loading = false
                     var response: Response
                     switch result {
@@ -80,7 +81,6 @@ class MainInteractor: MainInteractorInterface {
     func setSelectMovie(request: Main.SetSelectMovie.Request) {
         let index = request.index
         selectedMovie = movieList?.results[index]
-        id = selectedMovie?.id
         let response = Main.SetSelectMovie.Response()
         presenter.presentSetSelectMovie(reponse: response)
     }
@@ -94,11 +94,10 @@ class MainInteractor: MainInteractorInterface {
         }
     }
 
-    func pushToRefresh(request: Main.PushToRefresh.Request) {
-        var sort = request.sort
+    func pushToRefresh(request: Main.PullToRefresh.Request) {
         currentPage = request.currentPage
         movieList = nil
-        let request = Main.GetMovieList.Request(useCache: false, sortType: sort)
+        let request = Main.GetMovieList.Request(useCache: false, sortType: sort ?? .ASC)
         getMovieList(request: request)
     }
 }

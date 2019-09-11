@@ -84,7 +84,6 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
     }
 
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel) {
-        let displayedMovie = viewModel.displayedMovie
         switch viewModel.displayedMovie {
         case let .success(displayedMovie):
             if let posterUrl = displayedMovie.posterUrl, let url = URL(string: posterUrl) {

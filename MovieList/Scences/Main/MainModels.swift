@@ -81,11 +81,11 @@ struct Main {
         }
     }
 
-    struct PushToRefresh {
+    struct PullToRefresh {
         /// Data struct sent to Interactor
         struct Request {
             let currentPage: Int
-            let sort: GetMovieList.SortData
+        
         }
 
         /// Data struct sent to Presenter

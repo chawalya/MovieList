@@ -59,7 +59,7 @@ class MainViewController: UIViewController, MainViewControllerInterface {
     }
 
     @objc func pullToRefresh() {
-        let request = Main.PushToRefresh.Request(currentPage: 1, sort: sort ?? .ASC)
+        let request = Main.PullToRefresh.Request(currentPage: 1)
         interactor.pushToRefresh(request: request)
     }
 
