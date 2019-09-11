@@ -25,15 +25,23 @@ class MovieCell: UITableViewCell {
     }
 
     func updateUI(_ displayedMovies: Main.GetMovieList.ViewModel.DisplayedMovie) {
-        moviePoster.image = nil
-        backdrop.image = nil
         titleLabel.text = displayedMovies.name
         ratingLabel.text = displayedMovies.vote
         popLabel.text = displayedMovies.popularity
-      moviePoster.loadImageUrl(displayedMovies.posterUrl ?? URL.init(fileURLWithPath: ""))
-      backdrop.loadImageUrl(displayedMovies.backdropUrl ?? URL.init(fileURLWithPath: ""))
+      if let path = displayedMovies.posterUrl {
+      moviePoster.loadImageUrl(path)
+      }
+      if let path = displayedMovies.backdropUrl {
+        backdrop.loadImageUrl(path)
+      }
       
     }
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    moviePoster.image = nil
+    backdrop.image = nil
+    
+  }
 }
 
 extension UIImageView {

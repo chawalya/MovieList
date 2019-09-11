@@ -51,20 +51,14 @@ class MainPresenter: MainPresenterInterface {
         viewController.displaySelectMovie(viewModel: viewModel)
     }
 
-    func urlposterUrl(path: String) -> URL {
-        var pathUrl = "https://image.tmdb.org/t/p/original\(path)"
-        guard let url = URL(string: pathUrl) else {
-            return URL(fileURLWithPath: "")
-        }
-        return url
+    func urlposterUrl(path: String) -> URL? {
+      let pathUrl = "https://image.tmdb.org/t/p/original\(path)"
+      return URL(string: pathUrl)
     }
 
-    func urlbackdropUrl(path: String) -> URL {
-        var pathUrl = "https://image.tmdb.org/t/p/original\(path)"
-        guard let url = URL(string: pathUrl) else {
-            return URL(fileURLWithPath: "")
-        }
-        return url
+    func urlbackdropUrl(path: String) -> URL? {
+      let pathUrl = "https://image.tmdb.org/t/p/original\(path)"
+      return URL(string: pathUrl)
     }
 
     func presentSetTotalPage(reponse: Main.SetLoadMore.Response) {
