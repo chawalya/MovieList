@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4CCD1EA7FEB0CB57939AEF66 /* Pods_MovieList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8350B16E245204FAC14A93 /* Pods_MovieList.framework */; };
+		F906C65B232A000100EBACAD /* MainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906C659232A000100EBACAD /* MainInteractorTests.swift */; };
+		F906C65C232A000100EBACAD /* MainPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906C65A232A000100EBACAD /* MainPresenterTests.swift */; };
 		F9FE29F4231D281C00558881 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE29F3231D281C00558881 /* AppDelegate.swift */; };
 		F9FE29F9231D281C00558881 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29F7231D281C00558881 /* Main.storyboard */; };
 		F9FE29FB231D281C00558881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29FA231D281C00558881 /* Assets.xcassets */; };
@@ -33,10 +35,24 @@
 		F9FF3F192328A11F007C15C3 /* DetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FF3F182328A11E007C15C3 /* DetailRouter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F906C6542329FFBE00EBACAD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F9FE29E8231D281C00558881 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F9FE29EF231D281C00558881;
+			remoteInfo = MovieList;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		3C8350B16E245204FAC14A93 /* Pods_MovieList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CCA0C3A2000F507C6F40950 /* Pods-MovieList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieList.debug.xcconfig"; path = "Target Support Files/Pods-MovieList/Pods-MovieList.debug.xcconfig"; sourceTree = "<group>"; };
 		B751712E50912743F7BCD0D3 /* Pods-MovieList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieList.release.xcconfig"; path = "Target Support Files/Pods-MovieList/Pods-MovieList.release.xcconfig"; sourceTree = "<group>"; };
+		F906C64F2329FFBE00EBACAD /* MovieListTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieListTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F906C6532329FFBE00EBACAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F906C659232A000100EBACAD /* MainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorTests.swift; sourceTree = "<group>"; };
+		F906C65A232A000100EBACAD /* MainPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenterTests.swift; sourceTree = "<group>"; };
 		F9FE29F0231D281C00558881 /* MovieList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE29F3231D281C00558881 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9FE29F8231D281C00558881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -65,6 +81,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F906C64C2329FFBE00EBACAD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9FE29ED231D281C00558881 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -93,10 +116,21 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		F906C6502329FFBE00EBACAD /* MovieListTests */ = {
+			isa = PBXGroup;
+			children = (
+				F906C6532329FFBE00EBACAD /* Info.plist */,
+				F906C659232A000100EBACAD /* MainInteractorTests.swift */,
+				F906C65A232A000100EBACAD /* MainPresenterTests.swift */,
+			);
+			path = MovieListTests;
+			sourceTree = "<group>";
+		};
 		F9FE29E7231D281C00558881 = {
 			isa = PBXGroup;
 			children = (
 				F9FE29F2231D281C00558881 /* MovieList */,
+				F906C6502329FFBE00EBACAD /* MovieListTests */,
 				F9FE29F1231D281C00558881 /* Products */,
 				C7DA35673A137EE56BB8E219 /* Pods */,
 				100D74D00618574AA3C5F442 /* Frameworks */,
@@ -107,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				F9FE29F0231D281C00558881 /* MovieList.app */,
+				F906C64F2329FFBE00EBACAD /* MovieListTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -209,6 +244,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		F906C64E2329FFBE00EBACAD /* MovieListTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F906C6562329FFBE00EBACAD /* Build configuration list for PBXNativeTarget "MovieListTests" */;
+			buildPhases = (
+				F906C64B2329FFBE00EBACAD /* Sources */,
+				F906C64C2329FFBE00EBACAD /* Frameworks */,
+				F906C64D2329FFBE00EBACAD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F906C6552329FFBE00EBACAD /* PBXTargetDependency */,
+			);
+			name = MovieListTests;
+			productName = MovieListTests;
+			productReference = F906C64F2329FFBE00EBACAD /* MovieListTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		F9FE29EF231D281C00558881 /* MovieList */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F9FE2A02231D281C00558881 /* Build configuration list for PBXNativeTarget "MovieList" */;
@@ -238,6 +291,10 @@
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = SCB;
 				TargetAttributes = {
+					F906C64E2329FFBE00EBACAD = {
+						CreatedOnToolsVersion = 10.2.1;
+						TestTargetID = F9FE29EF231D281C00558881;
+					};
 					F9FE29EF231D281C00558881 = {
 						CreatedOnToolsVersion = 10.2.1;
 					};
@@ -257,11 +314,19 @@
 			projectRoot = "";
 			targets = (
 				F9FE29EF231D281C00558881 /* MovieList */,
+				F906C64E2329FFBE00EBACAD /* MovieListTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F906C64D2329FFBE00EBACAD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9FE29EE231D281C00558881 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -319,6 +384,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F906C64B2329FFBE00EBACAD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F906C65B232A000100EBACAD /* MainInteractorTests.swift in Sources */,
+				F906C65C232A000100EBACAD /* MainPresenterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F9FE29EC231D281C00558881 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -346,6 +420,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F906C6552329FFBE00EBACAD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F9FE29EF231D281C00558881 /* MovieList */;
+			targetProxy = F906C6542329FFBE00EBACAD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		F9FE29F7231D281C00558881 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
@@ -366,6 +448,44 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		F906C6572329FFBE00EBACAD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MovieListTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.scb.ios.advanced.MovieListTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieList.app/MovieList";
+			};
+			name = Debug;
+		};
+		F906C6582329FFBE00EBACAD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = MovieListTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.scb.ios.advanced.MovieListTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MovieList.app/MovieList";
+			};
+			name = Release;
+		};
 		F9FE2A00231D281C00558881 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -521,6 +641,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F906C6562329FFBE00EBACAD /* Build configuration list for PBXNativeTarget "MovieListTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F906C6572329FFBE00EBACAD /* Debug */,
+				F906C6582329FFBE00EBACAD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F9FE29EB231D281C00558881 /* Build configuration list for PBXProject "MovieList" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

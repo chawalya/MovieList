@@ -11,6 +11,7 @@ import UIKit
 protocol DetailPresenterInterface {
     func presentMovieDetail(response: Detail.GetMovieDetail.Response)
     func presentSetNewVoting(reponse: Detail.SetVoting.Response)
+  func presentStarVote(response: Detail.SetStar.Response)
 }
 
 class DetailPresenter: DetailPresenterInterface {
@@ -44,4 +45,15 @@ class DetailPresenter: DetailPresenterInterface {
         let viewModel = Detail.SetVoting.ViewModel()
         viewController.displayNewVote(viewModel: viewModel)
     }
+  func presentStarVote(response: Detail.SetStar.Response){
+       let starVoteUser = UserDefaults.standard.dictionary(forKey: "rateStar")
+    if let countStar = starVoteUser?[String(response.id)] as? Double{
+      print("countStar------------------------------------------------------------ \(countStar)")
+      let viewModel = Detail.SetStar.ViewModel(star: countStar)
+      viewController.displayStarRate(viewModel: viewModel)
+      
+
+    }
+
+  }
 }

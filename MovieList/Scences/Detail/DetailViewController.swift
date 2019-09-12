@@ -12,6 +12,7 @@ import UIKit
 protocol DetailViewControllerInterface: class {
     func displayMovieDetail(viewModel: Detail.GetMovieDetail.ViewModel)
     func displayNewVote(viewModel: Detail.SetVoting.ViewModel)
+    func displayStarRate(viewModel: Detail.SetStar.ViewModel)
 }
 
 protocol DetailViewControllerDelegate: class {
@@ -63,6 +64,7 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
             self?.calculateVote(vote: rating)
           
         }
+      
     }
 
     func calculateVote(vote: Double) {
@@ -103,6 +105,11 @@ class DetailViewController: UIViewController, DetailViewControllerInterface {
             present(alert, animated: true)
         }
     }
+  
+  func displayStarRate(viewModel: Detail.SetStar.ViewModel){
+    starRating.rating = viewModel.star
+    
+  }
 
     // MARK: - Router
 

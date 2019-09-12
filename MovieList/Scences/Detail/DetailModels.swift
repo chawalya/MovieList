@@ -45,4 +45,21 @@ struct Detail {
         struct ViewModel {
         }
     }
+  
+  struct SetStar {
+    /// Data struct sent to Interactor
+    struct Request {
+      
+    }
+    
+    /// Data struct sent to Presenter
+    struct Response {
+      let id: Int
+    }
+    
+    /// Data struct sent to ViewController
+    struct ViewModel {
+      let star: Double
+    }
+  }
 }

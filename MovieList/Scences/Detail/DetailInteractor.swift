@@ -31,6 +31,8 @@ class DetailInteractor: DetailInteractorInterface {
 
     func getMovieDetail(request: Detail.GetMovieDetail.Request) {
         guard let id = id else { return }
+      let response = Detail.SetStar.Response(id: id)
+      presenter.presentStarVote(response: response)
         worker?.getMovieDetail(id: id) { [weak self] result in
             var response: Detail.GetMovieDetail.Response
             switch result {
@@ -51,10 +53,15 @@ class DetailInteractor: DetailInteractorInterface {
         voteAvg = selectedMovie?.voteAverage
         let avg = voteAvg ?? 0.0
         newVote = ((avg * count) + (request.voteUser * 2)) / (count + 1)
+      var retrieveStar = UserDefaults.standard.dictionary(forKey: "rateStar") ?? [:]
+      retrieveStar[String(id)] = request.voteUser
         var retrieveDict = UserDefaults.standard.dictionary(forKey: "voteByUser") ?? [:]
         retrieveDict[String(id)] = newVote
         UserDefaults.standard.set(retrieveDict, forKey: "voteByUser")
-        let response = Detail.SetVoting.Response()
-        presenter.presentSetNewVoting(reponse: response)
+      UserDefaults.standard.set(retrieveStar, forKey: "rateStar")
+      
+      
+        let response2 = Detail.SetVoting.Response()
+        presenter.presentSetNewVoting(reponse: response2)
     }
 }
