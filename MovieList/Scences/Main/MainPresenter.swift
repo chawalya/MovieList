@@ -11,7 +11,6 @@ import UIKit
 protocol MainPresenterInterface {
     func presentMovieList(response: Main.GetMovieList.Response)
     func presentSetSelectMovie(reponse: Main.SetSelectMovie.Response)
-    func presentSetTotalPage(reponse: Main.SetLoadMore.Response)
 }
 
 class MainPresenter: MainPresenterInterface {
@@ -61,6 +60,4 @@ class MainPresenter: MainPresenterInterface {
       return URL(string: pathUrl)
     }
 
-    func presentSetTotalPage(reponse: Main.SetLoadMore.Response) {
-    }
 }

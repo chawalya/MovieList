@@ -85,7 +85,6 @@ struct Main {
         /// Data struct sent to Interactor
         struct Request {
             let currentPage: Int
-        
         }
 
         /// Data struct sent to Presenter
@@ -96,4 +95,7 @@ struct Main {
         struct ViewModel {
         }
     }
+  
+ 
+
 }

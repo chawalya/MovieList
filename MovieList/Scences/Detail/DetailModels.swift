@@ -17,7 +17,6 @@ struct Detail {
         struct Response {
             let result: Result<MovieDetail?>
         }
-
         /// Data struct sent to ViewController
         struct ViewModel {
             let displayedMovie: Result<DisplayedMovie>
@@ -36,11 +35,9 @@ struct Detail {
         struct Request {
             let voteUser: Double
         }
-
         /// Data struct sent to Presenter
         struct Response {
         }
-
         /// Data struct sent to ViewController
         struct ViewModel {
         }
@@ -49,7 +46,6 @@ struct Detail {
   struct SetStar {
     /// Data struct sent to Interactor
     struct Request {
-      
     }
     
     /// Data struct sent to Presenter
@@ -62,4 +58,8 @@ struct Detail {
       let star: Double
     }
   }
+  
+  
+  
+  
 }

@@ -10,6 +10,8 @@
 		4CCD1EA7FEB0CB57939AEF66 /* Pods_MovieList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C8350B16E245204FAC14A93 /* Pods_MovieList.framework */; };
 		F906C65B232A000100EBACAD /* MainInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906C659232A000100EBACAD /* MainInteractorTests.swift */; };
 		F906C65C232A000100EBACAD /* MainPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F906C65A232A000100EBACAD /* MainPresenterTests.swift */; };
+		F9F55ACB232A624100590EE4 /* DetailInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F55AC9232A624100590EE4 /* DetailInteractorTests.swift */; };
+		F9F55ACC232A624100590EE4 /* DetailPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9F55ACA232A624100590EE4 /* DetailPresenterTests.swift */; };
 		F9FE29F4231D281C00558881 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9FE29F3231D281C00558881 /* AppDelegate.swift */; };
 		F9FE29F9231D281C00558881 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29F7231D281C00558881 /* Main.storyboard */; };
 		F9FE29FB231D281C00558881 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F9FE29FA231D281C00558881 /* Assets.xcassets */; };
@@ -53,6 +55,8 @@
 		F906C6532329FFBE00EBACAD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F906C659232A000100EBACAD /* MainInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractorTests.swift; sourceTree = "<group>"; };
 		F906C65A232A000100EBACAD /* MainPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenterTests.swift; sourceTree = "<group>"; };
+		F9F55AC9232A624100590EE4 /* DetailInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailInteractorTests.swift; sourceTree = "<group>"; };
+		F9F55ACA232A624100590EE4 /* DetailPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenterTests.swift; sourceTree = "<group>"; };
 		F9FE29F0231D281C00558881 /* MovieList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F9FE29F3231D281C00558881 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F9FE29F8231D281C00558881 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -122,6 +126,8 @@
 				F906C6532329FFBE00EBACAD /* Info.plist */,
 				F906C659232A000100EBACAD /* MainInteractorTests.swift */,
 				F906C65A232A000100EBACAD /* MainPresenterTests.swift */,
+				F9F55AC9232A624100590EE4 /* DetailInteractorTests.swift */,
+				F9F55ACA232A624100590EE4 /* DetailPresenterTests.swift */,
 			);
 			path = MovieListTests;
 			sourceTree = "<group>";
@@ -390,6 +396,8 @@
 			files = (
 				F906C65B232A000100EBACAD /* MainInteractorTests.swift in Sources */,
 				F906C65C232A000100EBACAD /* MainPresenterTests.swift in Sources */,
+				F9F55ACB232A624100590EE4 /* DetailInteractorTests.swift in Sources */,
+				F9F55ACC232A624100590EE4 /* DetailPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
