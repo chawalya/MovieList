@@ -14,7 +14,7 @@ class DetailPresenterTests: XCTestCase {
   // MARK: - Subject under test
 
   var sut: DetailPresenter!
-  var detailPresenterOutputSpy = DetailPresenterOutputSpy()
+  
 
   // MARK: - Test lifecycle
 
@@ -31,7 +31,6 @@ class DetailPresenterTests: XCTestCase {
 
   func setupDetailPresenter() {
     sut = DetailPresenter()
-    sut.viewController = detailPresenterOutputSpy
   }
 
   // MARK: - Test doubles
@@ -61,6 +60,9 @@ class DetailPresenterTests: XCTestCase {
 
   func testPresentSetNewVoting() {
     // Given
+    let detailPresenterOutputSpy = DetailPresenterOutputSpy()
+    sut.viewController = detailPresenterOutputSpy
+
     // When
     let response = Detail.SetVoting.Response()
     sut.presentSetNewVoting(reponse: response)
@@ -70,6 +72,11 @@ class DetailPresenterTests: XCTestCase {
   
   func testPresentStarVote() {
     // Given
+    let detailPresenterOutputSpy = DetailPresenterOutputSpy()
+    sut.viewController = detailPresenterOutputSpy
+    var retrieveStar = UserDefaults.standard.dictionary(forKey: "rateStar") ?? [:]
+    retrieveStar[String(1)] = 2
+     UserDefaults.standard.set(retrieveStar, forKey: "rateStar")
     // When
     let response = Detail.SetStar.Response(id: 1)
     sut.presentStarVote(response: response)
@@ -77,31 +84,38 @@ class DetailPresenterTests: XCTestCase {
     XCTAssert(detailPresenterOutputSpy.displayStarRateCalled)
   }
   
+  func testPresentStarVoteFail() {
+    // Given
+    let detailPresenterOutputSpy = DetailPresenterOutputSpy()
+    sut.viewController = detailPresenterOutputSpy
+    var retrieveStar = UserDefaults.standard.dictionary(forKey: "rateStar") ?? [:]
+    retrieveStar[String(1)] = 2
+    UserDefaults.standard.set(retrieveStar, forKey: "rateStar")
+    // When
+    let response = Detail.SetStar.Response(id: 123)
+    sut.presentStarVote(response: response)
+    // Then
+    XCTAssertEqual(detailPresenterOutputSpy.displayStarRateCalled,false)
+  }
+
+  
   func testPresentMovieDetailSuccess(){
     // Given
+    let detailPresenterOutputSpy = DetailPresenterOutputSpy()
+    sut.viewController = detailPresenterOutputSpy
+
     // When
     let response = Detail.GetMovieDetail.Response(result: .success(MovieDetail(genres: [Genre(id: 1, name: "")], id: 1, imdbID: "", originalLanguage: "", overview: "", popularity: 0.0, title: "", voteAverage: 0.0, voteCount: 0, posterPath: "1")))
     sut.presentMovieDetail(response: response)
     // Then
     XCTAssert(detailPresenterOutputSpy.displayMovieDetailCalled)
-    if let viewModel = detailPresenterOutputSpy.displayMovieDetailViewModel {
-      switch viewModel.displayedMovie {
-      case .success(let data):
-        XCTAssertEqual(data.category, "Category : ")
-        XCTAssertEqual(data.detail, "")
-        XCTAssertEqual(data.posterUrl, "https://image.tmdb.org/t/p/original1")
-        XCTAssertEqual(data.language,"Language : ")
-        XCTAssertEqual(data.title, "")
-      default: XCTFail()
-      }
-    }
-    else {
-      XCTFail()
-    }
   }
   
   func testPresentMovieDetailFail(){
     // Given
+    let detailPresenterOutputSpy = DetailPresenterOutputSpy()
+    sut.viewController = detailPresenterOutputSpy
+
     // When
     let response = Detail.GetMovieDetail.Response(result: .failure(NSError(domain: "", code: 0, userInfo: nil)))
     sut.presentMovieDetail(response: response)

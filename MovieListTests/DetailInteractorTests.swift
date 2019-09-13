@@ -14,8 +14,6 @@ class DetailInteractorTests: XCTestCase {
   // MARK: - Subject under test
 
   var sut: DetailInteractor!
-  var detailWorkerOutputSpy = DetailWorkerOutputSpy(store: MovieDetailStore())
-  var detailPresenOutputSpy = DetailPresentOutputSpy()
 
 
   // MARK: - Test lifecycle
@@ -33,8 +31,7 @@ class DetailInteractorTests: XCTestCase {
 
   func setupDetailInteractor() {
     sut = DetailInteractor()
-    sut.worker = detailWorkerOutputSpy
-    sut.presenter = detailPresenOutputSpy
+
   }
 
   // MARK: - Test doubles
@@ -75,6 +72,10 @@ class DetailInteractorTests: XCTestCase {
 
   func testGetMovieDetailForSuccess() {
     // Given
+    let detailWorkerOutputSpy = DetailWorkerOutputSpy(store: MovieDetailStore())
+    let detailPresenOutputSpy = DetailPresentOutputSpy()
+    sut.worker = detailWorkerOutputSpy
+    sut.presenter = detailPresenOutputSpy
     sut.id = 1
     // When
      let request = Detail.GetMovieDetail.Request()
@@ -86,6 +87,10 @@ class DetailInteractorTests: XCTestCase {
   
   func testGetMovieDetailForFail() {
     // Given
+    let detailWorkerOutputSpy = DetailWorkerOutputSpy(store: MovieDetailStore())
+    let detailPresenOutputSpy = DetailPresentOutputSpy()
+    sut.worker = detailWorkerOutputSpy
+    sut.presenter = detailPresenOutputSpy
     sut.id = 1
     detailWorkerOutputSpy.failure = true
     // When
@@ -98,13 +103,19 @@ class DetailInteractorTests: XCTestCase {
 
   func testCalculateVote() {
     // Given
-    sut.voteCount = 0
+    let detailWorkerOutputSpy = DetailWorkerOutputSpy(store: MovieDetailStore())
+    let detailPresenOutputSpy = DetailPresentOutputSpy()
+    sut.worker = detailWorkerOutputSpy
+    sut.presenter = detailPresenOutputSpy
+    sut.voteCount = 4
+    sut.voteAvg = 4.0
     sut.id = 1
-    let request = Detail.SetVoting.Request(voteUser: 0.0)
+    let request = Detail.SetVoting.Request(voteUser: 2.0)
     // When
     sut.calculateVote(request: request)
     // Then
     XCTAssert(detailPresenOutputSpy.presentSetNewVotingCalled)
+    XCTAssertEqual(sut.newVote, 4.0)
   }
 }
 

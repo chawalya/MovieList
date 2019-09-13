@@ -14,9 +14,6 @@ class MainInteractorTests: XCTestCase {
   // MARK: - Subject under test
 
   var sut: MainInteractor!
-  var mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
-  var mainPresenterOutputSpy = MainPresenterOutputSpy()
-
   // MARK: - Test lifecycle
 
   override func setUp() {
@@ -32,8 +29,7 @@ class MainInteractorTests: XCTestCase {
 
   func setupMainInteractor() {
     sut = MainInteractor()
-    sut.worker = mainWorkerOutputsSpy
-    sut.presenter = mainPresenterOutputSpy
+
   }
   
   // MARK: - Test doubles
@@ -64,6 +60,7 @@ class MainInteractorTests: XCTestCase {
     override func getMovieList(page: Int, sort: Main.GetMovieList.SortData, _ completion: @escaping (Result<MovieList>) -> Void) {
       getMovieListCalled = true
       if failure {
+        
         completion(Result.failure(NSError(domain: "", code: 0, userInfo: nil)))
       }
       else {
@@ -76,90 +73,130 @@ class MainInteractorTests: XCTestCase {
 
   func testGetMovileListForNoCachecaseSuccess() {
     // Given
-    // When
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+        // When
     let request = Main.GetMovieList.Request(useCache: false, sortType: .DESC)
     sut.getMovieList(request: request)
     // Then
+    XCTAssertEqual(sut.sortCurrent, .DESC)
     XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForNoCachecaseSuccess2() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     // When
     let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
     sut.getMovieList(request: request)
     // Then
+    XCTAssertEqual(sut.sortCurrent, .ASC)
     XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForNoCachecaseFailure() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     mainWorkerOutputsSpy.failure = true
     // When
     let request = Main.GetMovieList.Request(useCache: false, sortType: .DESC)
     sut.getMovieList(request: request)
     // Then
+    XCTAssertEqual(sut.sortCurrent, .DESC)
     XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForNoCachecaseFailure2() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     mainWorkerOutputsSpy.failure = true
     // When
     let request = Main.GetMovieList.Request(useCache: false, sortType: .ASC)
     sut.getMovieList(request: request)
     // Then
+    XCTAssertEqual(sut.sortCurrent, .ASC)
     XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForUseCachecaseSuccess() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+    sut.movieList = MovieList(page: 1, totalResults: 1, totalPages: 1, results: [])
     // When
     let request = Main.GetMovieList.Request(useCache: true, sortType: .DESC)
     sut.getMovieList(request: request)
     // Then
-    XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForUseCachecaseSuccess2() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+    sut.movieList = MovieList(page: 1, totalResults: 1, totalPages: 1, results: [])
     // When
     let request = Main.GetMovieList.Request(useCache: true, sortType: .ASC)
     sut.getMovieList(request: request)
     // Then
-    XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
   func testGetMovileListForUseCachecaseFailure() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+    sut.movieList = MovieList(page: 1, totalResults: 1, totalPages: 1, results: [])
     mainWorkerOutputsSpy.failure = true
     // When
     let request = Main.GetMovieList.Request(useCache: true, sortType: .DESC)
     sut.getMovieList(request: request)
     // Then
-    XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   func testGetMovileListForUseCachecaseFailure2() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+    sut.movieList = MovieList(page: 1, totalResults: 1, totalPages: 1, results: [])
     mainWorkerOutputsSpy.failure = true
     // When
     let request = Main.GetMovieList.Request(useCache: true, sortType: .ASC)
     sut.getMovieList(request: request)
     // Then
-    XCTAssert(mainWorkerOutputsSpy.getMovieListCalled)
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
 
   
   func testSetSelectMovie() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     // When
     let request = Main.SetSelectMovie.Request(index: 1)
     sut.setSelectMovie(request: request)
@@ -169,6 +206,10 @@ class MainInteractorTests: XCTestCase {
   
   func testSetCountPage() {
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     sut.currentPage = 1
     sut.totalPage = 50
     // When
@@ -178,8 +219,27 @@ class MainInteractorTests: XCTestCase {
     XCTAssert(mainPresenterOutputSpy.presentMovieListCalled)
   }
   
+  func testSetCountPageFail() {
+    // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
+    sut.currentPage = 51
+    sut.totalPage = 50
+    // When
+    let request = Main.SetLoadMore.Request(sort: .DESC)
+    sut.setCountPage(request: request)
+    // Then
+    XCTAssertEqual(mainPresenterOutputSpy.presentMovieListCalled, false)
+  }
+
   func testPullToRefresh(){
     // Given
+    let mainWorkerOutputsSpy = MainWorkerOutputsSpy(store: MovieRestStore())
+    let mainPresenterOutputSpy = MainPresenterOutputSpy()
+    sut.worker = mainWorkerOutputsSpy
+    sut.presenter = mainPresenterOutputSpy
     // When
     let request = Main.PullToRefresh.Request(currentPage: 1)
     sut.pullToRefresh(request: request)

@@ -46,13 +46,10 @@ class DetailPresenter: DetailPresenterInterface {
         viewController.displayNewVote(viewModel: viewModel)
     }
   func presentStarVote(response: Detail.SetStar.Response){
-       let starVoteUser = UserDefaults.standard.dictionary(forKey: "rateStar")
+    let starVoteUser = UserDefaults.standard.dictionary(forKey: "rateStar")
     if let countStar = starVoteUser?[String(response.id)] as? Double{
       let viewModel = Detail.SetStar.ViewModel(star: countStar)
       viewController.displayStarRate(viewModel: viewModel)
-      
-
     }
-
   }
 }
